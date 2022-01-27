@@ -1,0 +1,11 @@
+.related-card-container {
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+}
+
+.related-card {
+  margin: 10px;
+  width: 150px;
+  text-align: center;
+}

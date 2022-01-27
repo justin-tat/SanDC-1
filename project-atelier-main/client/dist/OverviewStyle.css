@@ -1,0 +1,116 @@
+.ov-main {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.ov-gallery-container {
+  border: 2px gray inset;
+}
+
+.ov-gallery {
+  max-width: 30vmax;
+  max-height: 50vmax;
+}
+
+.ov-placeholder {
+  display:inline-flex;
+  width:30vmax;
+}
+
+.ov-styles-container {
+  padding: 20px;
+}
+
+.ov-styles {
+  position: relative;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: -5px 5px 10px 5px gray;
+  margin: 5px;
+}
+
+.ov-checkmark {
+  position:absolute;
+  color:white;
+  transform: translate(-65px, 50px)
+}
+
+.ov-changePhoto {
+  visibility:visible;
+  position:absolute;
+}
+
+.ov-modal {
+  position:fixed;
+  background-color: gray;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow: hidden;
+  width:100%;
+  height:100%;
+  z-index: 1;
+}
+
+.ov-thumbnail {
+  display:flex;
+  flex-flow: column;
+  position: sticky;
+  right: 225;
+  z-index: 2;
+}
+
+.ov-thumbnail-photo {
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 5px;
+}
+
+.ov-changePhoto {
+  visibility: visible;
+  position: relative;
+}
+
+#back {
+  align-self: center;
+  right: 75%;
+  bottom:10%;
+  z-index: 0;
+}
+
+#forward {
+  align-self: center;
+  right:25%;
+  bottom:10%;
+  z-index: 0;
+}
+
+.ov-removeMargin {
+  margin: 0;
+}
+
+.ov-modal-image {
+  max-height:50vmax;
+  max-width:100vmax;
+}
+
+.ov-zoomedOut {
+  transform: scale(1);
+  cursor: zoom-in
+}
+
+.ov-zoomedIn {
+  transform: scale(2.5);
+  cursor: zoom-out
+}
+
+#ov-toggleModal {
+  position:fixed;
+  top:50px;
+  right:50px;
+}
+
+.ov-description tr, .ov-description th, .ov-description td {
+  padding: 0 20px 0 20px;
+}
