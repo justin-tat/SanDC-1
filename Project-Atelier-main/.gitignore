@@ -1,0 +1,15 @@
+node_modules
+config.js
+coverage
+*.pem
+
+client/dist/bundle.js
+client/dist/bundle.js.map
+client/dist/bundle.js.br
+client/dist/bundle.js.gz
+client/dist/bundle.js.map.br
+client/dist/bundle.js.map.gz
+
+client/dist/bundle.js.LICENSE.txt
+client/dist/bundle.js.LICENSE.txt.br
+client/dist/bundle.js.LICENSE.txt.gz

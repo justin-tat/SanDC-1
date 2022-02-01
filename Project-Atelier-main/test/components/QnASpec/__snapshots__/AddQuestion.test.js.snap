@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add new question form click on submit button when form not filled properly 1`] = `ShallowWrapper {}`;
+
+exports[`Add new question form isValid if true should invoked passed functions 1`] = `ShallowWrapper {}`;
