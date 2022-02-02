@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`API calls in Main component mocks post API call for adding a new question 1`] = `ShallowWrapper {}`;

@@ -1,0 +1,572 @@
+/* Rating Section Start -----------------------------------------------------------------------------------------------*/
+
+.RatingsNReviewsSection {
+  position: relative;
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+.review-loading {
+  margin: 200px;
+}
+.review-loading i{
+  font-size: 100px;
+}
+.review-loading h3{
+  font-size: 20px;
+  padding-left: 10px;
+}
+.newReview-Background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newReview-Container {
+  width: 900px;
+  height: 900px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.newReview-Container .title {
+  display: inline-block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.newReview-TopCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.newReview-TopCloseBtn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.newReview-Container .newReview-Body {
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  text-align: center;
+  overflow-y: scroll;
+  max-height: 100%;
+}
+
+.newReview-Container .newReview-Footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newReview-Container .newReview-Footer button {
+  width: 150px;
+  height: 45px;
+  margin: 10px;
+  border: none;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  border: 2px solid black;
+}
+.newReview-Container .newReview-Footer button:hover {
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+#newReview-CancelBtn {
+  color: crimson;
+  background-color: white;
+  border: 2px solid crimson;
+}
+#newReview-CancelBtn:hover {
+  background-color: crimson;
+  color: white;
+  border: none;
+}
+
+.review-general-button {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+}
+.review-general-button:hover {
+  background-color: #555555;
+  color: white;
+}
+.review-starBreakDown {
+  position: relative;
+}
+.review-starBreakDown-inner {
+  height: 100px;
+  margin-top: 20px;
+}
+.review-starBreakDown-inner h1 {
+  display: inline-block;
+  color: #525252;
+  text-decoration: underline;
+}
+.review-starBreakDown-star {
+  display: inline-block;
+  padding-left: 50px;
+}
+.review-starBreakDown-recommended {
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.review-Cell {
+  border-bottom: 1px solid #707070;
+  width: 90%;
+  margin: 20px 0px;
+}
+.review-DropDown {
+  margin-top: 20px;
+}
+.review-DropDown select {
+  border: none;
+  text-decoration: underline;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.review-Top span{
+  position: absolute;
+  right:10%;
+}
+.review-Response {
+  background-color: #ebebeb;
+  padding: 1px 0px 10px 10px;
+  margin: 20px 0px;
+  align-content: center;
+}
+.review-Response p {
+  font-weight: bold;
+}
+.review-starBreakDown-rating-head {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 15px;
+}
+.review-helpful {
+  margin: 12px 0px;
+}
+.review-helpful div span {
+  padding-right: 10px;
+}
+.review-helpful-1 {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.review-Summary {
+  padding: 10px 0px;
+}
+.review-Body {
+  max-width:750px;
+  word-wrap:break-word;
+  margin: -20px 0px 15px 0px;
+}
+.review-ImageSection {
+  margin: 10px 0px;
+}
+.review-ImageSection .review-Imageblock {
+  margin-left: -10px;
+  padding-right: 3px;
+}
+.review-List {
+  position: absolute;
+  top: 85px;
+  right: 0;
+  width: 100%;
+  height: 540px;
+  overflow-y: scroll;
+}
+.review-starBreakDown-rating-percentage {
+  background-color: #d8d8d8;
+	border-radius: 5px;
+	position: relative;
+	margin: 15px 0;
+	height: 15px;
+	width: 150px;
+  display: inline-block;
+  cursor: pointer;
+}
+.review-starBreakDown-rating-percentage:hover {
+  box-shadow: 0 10px 12px 0 rgba(0,0,0,0.24), 0 14px 45px 0 rgba(0,0,0,0.19);
+}
+
+.review-starBreakDown-reset button {
+  color: white;
+  padding: 8px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  border-radius: 5px;
+}
+.review-starBreakDown-reset button:hover {
+  background-color: #555555;
+  color: white;
+}
+.review-Section {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 70%;
+  height: 100%;
+}
+
+.review-searchBar  input {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  border-radius: 5px;
+}
+
+.review-Button {
+  position: absolute;
+  bottom: 40px;
+}
+.review-Button button{
+  margin-left: 15px ;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  border-radius: 5px;
+}
+.review-Button button:hover {
+  background-color: #555555;
+  color: white;
+}
+.review-starSection {
+  width: 30%;
+  height: 100%;
+}
+.review-starBreakDown-rating-percentage-clicked {
+  background-color: #d8d8d8;
+	box-shadow: 0 5px 5px -7px rgba(4, 99, 9, 0.89), 0 5px 7px rgba(4, 99, 9, 0.89);
+	border-radius: 5px;
+	position: relative;
+	margin: 15px 0;
+	height: 15px;
+	width: 150px;
+  margin-bottom:-5px;
+  padding-bottom:5px;
+  cursor: pointer;
+}
+.review-starBreakDown-filter {
+  background: linear-gradient(to left, #09e07c, rgba(4, 99, 9, 0.89));
+	border-radius: 5px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 0;
+	opacity: 1;
+}
+.review-starBreakDown-filter-clicked {
+  background: linear-gradient(to left, #09e07c, rgba(4, 99, 9, 0.89));
+	border-radius: 5px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 0;
+	opacity: 1;
+  margin-bottom:-5px;
+  padding-bottom:5px;
+}
+.review-starBreakDown-rating {
+  position: relative;
+  height: 50px;
+}
+.review-starBreakDown-rating-head {
+  position: absolute;
+  top:15px;
+  left: 5px
+}
+.review-starBreakDown-rating-star {
+  position: absolute;
+  top:2px;
+  left: 50px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+::-webkit-scrollbar-track {
+  background-color: white;
+}
+.review-Imageblock {
+  display: inline-block;
+}
+.review-Images {
+  width: 115px;
+  height: 100px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+/* review image */
+#review-Images {
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#review-Images:hover {opacity: 0.7;}
+
+/*  Modal (background) */
+.review-Modal {
+  display: none;
+  padding-top: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.7);
+}
+
+/* Modal Content (Image) */
+.review-Modal-Content {
+  margin: auto;
+  display: block;
+  margin-top: 120px;
+  width: 80%;
+  max-width: 700px;
+}
+
+/*  Animation - Modal */
+.review-Modal-Content {
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)}
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* Modal Close Button */
+.review-Modal-Close {
+  position: absolute;
+  top: 150px;
+  right: 500px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.review-Modal-Close:hover,
+.review-Modal-Close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 700px){
+  .review-Modal-Content {
+      width: 100%;
+  }
+}
+/* tile star */
+.review-stars-outer {
+  position: relative;
+  display: inline-block;
+}
+
+.review-stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+.newReview-Star-Input {
+  display: none;
+}
+.newReview-Star-After::before {
+  content: "\f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #f8ce0b;
+  cursor: pointer;
+}
+.newReview-Star::before {
+  content: "\f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #ccc;
+  cursor: pointer;
+}
+.newReview-Summary textarea {
+  width:60%;
+  height: 15px;
+  padding: 15px;
+  outline: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  overflow: hidden;
+}
+.newReview-Email textarea {
+  width:60%;
+  height: 15px;
+  padding: 15px;
+  outline: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  overflow: hidden;
+}
+.newReview-Content textarea {
+  width:89%;
+  height: 190px;
+  padding: 15px;
+  outline: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  overflow: hidden;
+}
+.newReview-nickName input {
+  width:40%;
+  height: 10px;
+  padding: 15px;
+  outline: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  overflow: hidden;
+}
+.review-stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #ccc;
+}
+
+.review-stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #f8ce0b;
+}
+.review-report {
+  cursor: pointer;
+}
+.review-report-onClicked {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.helpfulness-onClicked {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.review-product {
+  margin-top: 35px;
+  width: 233px;
+  height: 310px;
+}
+.review-product div {
+  margin-bottom: 20px;
+}
+.review-productTrack {
+  position: relative;
+  color: black;
+}
+.review-productTrack-bar {
+  display: inline-block;
+  width: 75px;
+  height: 7px;
+  background-color: #ebebeb;
+}
+.review-productTrack-text {
+  display: inline-block;
+  font-size: 12px;
+  color: #5d5d5d;
+}
+#review-productTrack-text-1 {
+  position: absolute;
+  top:16px;
+  left:0;
+  color: #7d7d7d;
+}
+#review-productTrack-text-2 {
+  position: absolute;
+  top:24px;
+  left:50%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-align: center;
+  transform: translate(-50%) translateY(-50%);
+  color: #7d7d7d;
+}
+#review-productTrack-text-3 {
+  position: absolute;
+  top:16px;
+  right:0;
+  color: #7d7d7d;
+}
+.review-productTrack i {
+  position: absolute;
+  left: 0;
+  top: -3px;
+  font-size: 25px;
+}
+/* Rating Section End---------------------------------------------------------------------------------------------------*/
