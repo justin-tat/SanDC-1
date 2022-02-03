@@ -18,7 +18,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      productId: 59553,
+      productId: 64620,
       currentProduct: null,
       currentProductStyle: null,
       relatedProducts: null,
@@ -51,7 +51,7 @@ class App extends React.Component {
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
       getStyleInfo(productId),
-      getRelatedProductInfo(productId),
+      //getRelatedProductInfo(productId),
       getQuestionsListInfo(productId),
     ]);
 
@@ -128,10 +128,10 @@ class App extends React.Component {
             currentProductStyle={this.state.currentProductStyle} currentRatings={this.state.averageRate}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
             addToFavorites={this.state.favoriteOutfits} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />
-          <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
+          {/* <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
-            toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} />
+            toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} /> */}
           <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
