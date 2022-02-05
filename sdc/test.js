@@ -6,12 +6,15 @@ const app = require('./index.js');
 
 
 
+describe('GET /', function() {
+  it('responds with 200', function(done) {
+    request(app)
+    .get('/')
+    .expect(200, done);
+  });
+});
 
 
 
 
-describe('#indexOf()', function() {
-  it('should return -1 when not present', function() {
-    assert.equal([1,2,3].indexOf(4), -1)
-  })
-})
+
