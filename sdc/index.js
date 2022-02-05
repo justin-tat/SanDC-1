@@ -9,6 +9,10 @@ app.get('/', (req, res) => {
   res.send('Hello SDC');
 });
 
+app.get('/test', async (req, res) => {
+  res.json({message: 'pass!'})
+})
+
 app.use('/product', productRouter);
 
 app.listen(port, () => {
