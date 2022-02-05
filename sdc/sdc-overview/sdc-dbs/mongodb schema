@@ -1,0 +1,41 @@
+
+// only notes for now
+{
+  _id: ObjectId
+  id: integer
+  name: string
+  slogan: string
+  description: string
+  category: string
+  default_price: string
+  features: [
+    {
+      _id: ObjectId
+      feature: string,
+      value: string,
+    }
+  ]
+  styles: [
+    {
+      _id: ObjectId
+      name: string
+      original_price: string
+      sale_price: string
+      default: boolean
+      photos: [
+        {
+          _id: ObjectId
+          thumbnail_url: string
+          url: string
+        }
+      ]
+    }
+  ]
+  skus: [
+    {
+      _id: ObjectId
+      quantity: integer
+      size: enum
+    }
+  ]
+}
