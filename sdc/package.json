@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "start:nodemon": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/mocha/bin/mocha"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +14,11 @@
     "@babel/cli": "^7.17.0",
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "chai": "^4.3.6",
     "eslint-config-hackreactor": "github:hackreactor-labs/eslint-config-hackreactor",
-    "nodemon": "^2.0.15"
+    "mocha": "^9.2.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
     "express": "^4.17.2"
