@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
   res.send('Hello SDC');
 });
 
+
 app.use('/product', productRouter);
 
 app.listen(port, () => {
@@ -16,3 +17,4 @@ app.listen(port, () => {
 });
 
 
+module.exports = app;
