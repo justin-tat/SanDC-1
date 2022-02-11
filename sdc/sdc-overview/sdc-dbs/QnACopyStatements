@@ -1,0 +1,3 @@
+\copy questions from '/Users/justintat/Downloads/questions.csv' delimiter ',' csv header;
+\copy answers from '/Users/justintat/Downloads/answers.csv' delimiter ',' csv header;
+\copy photos from '/Users/justintat/Downloads/answers_photos.csv' delimiter ',' csv header;
