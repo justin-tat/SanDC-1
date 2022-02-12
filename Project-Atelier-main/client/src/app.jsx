@@ -124,16 +124,22 @@ class App extends React.Component {
         <div>
           <TopSearchBar />
           <SiteWideMessage />
-          <ProductOverviewWithClickData currentProduct={this.state.currentProduct}
-            currentProductStyle={this.state.currentProductStyle} currentRatings={this.state.averageRate}
-            addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
-            addToFavorites={this.state.favoriteOutfits} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />
+          <ProductOverviewWithClickData
+            currentProduct={this.state.currentProduct}
+            currentProductStyle={this.state.currentProductStyle}
+            currentRatings={this.state.averageRate}
+            addToOutfit={this.addToOutfit.bind(this)}
+            toggleFavorite={this.toggleAddToFavorite.bind(this)}
+            addToFavorites={this.state.favoriteOutfits}
+            currentStyleId={this.state.outFitStyleId}
+            totalReviews={this.state.totalReviews}
+          />
           {/* <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
             toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} /> */}
-          <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
-          <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
+          {/* <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/> */}
+          {/* <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} /> */}
         </div>
       );
     }
