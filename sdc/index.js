@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.use('/product', productRouter);
+app.use('/fec2/hr-rpp/products/', productRouter);
 
 app.listen(port, () => {
   console.log(`SDC app listening on port ${port}`);

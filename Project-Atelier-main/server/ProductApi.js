@@ -5,12 +5,18 @@ const gitToken = require('../config.js');
 const getSpecificProduct = (productId) => {
   let options = {
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}`,
+    // url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}`,
+    url: `http://localhost:3050/fec2/hr-rpp/products/${productId}`,
     headers: { Authorization: gitToken.Token },
   };
   return axios(options)
     .then((response) => {
+      console.log('options:', options);
       return response.data;
+    })
+    .catch((error) => {
+      console.log('options:', options);
+      console.log('error:', error);
     });
 };
 
