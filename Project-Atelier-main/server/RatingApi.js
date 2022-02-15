@@ -5,11 +5,13 @@ const gitToken = require('../config.js');
 const getTotalReviews = (productId, page) => {
   let options = {
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productId}&count=50&sort=relevant&page=${page}`,
+    //url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productId}&count=50&sort=relevant&page=${page}`,
+    url: 'http://localhost:3050/fec2/hr-rpp/reviews/${productId}',
     headers: { Authorization: gitToken.Token },
   };
   return axios(options)
     .then(response => {
+      console.log('response line 14', response);
       return response.data;
     })
     .catch((err) => {
