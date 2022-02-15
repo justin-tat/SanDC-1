@@ -6,12 +6,14 @@ const getTotalReviews = (productId, page) => {
   let options = {
     method: 'GET',
     //url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productId}&count=50&sort=relevant&page=${page}`,
-    url: 'http://localhost:3050/fec2/hr-rpp/reviews/${productId}',
+    url: `http://localhost:3050/fec2/hr-rpp/reviews/${productId}`,
     headers: { Authorization: gitToken.Token },
   };
   return axios(options)
     .then(response => {
-      console.log('response line 14', response);
+      console.log('review api line 14');
+      //response.data = { product: '64620', page: 50, count: 50, results: [] }
+      //console.log('response', response.data);
       return response.data;
     })
     .catch((err) => {

@@ -11,7 +11,7 @@ const getSpecificProduct = (productId) => {
   };
   return axios(options)
     .then((response) => {
-      console.log('options:', options);
+      //console.log('options:', options);
       return response.data;
     })
     .catch((error) => {

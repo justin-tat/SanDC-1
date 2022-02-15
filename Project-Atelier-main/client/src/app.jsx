@@ -37,17 +37,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log('app line 40');
     this.updateProduct(this.state.productId);
   }
 
   handleReviews(reviews) {
+    console.log('app line 45');
     this.setState({totalReviews: reviews});
   }
   handleAverageRate(rate) {
+    console.log('app line 49');
     this.setState({averageRate: rate});
   }
 
   async updateProduct(productId) {
+    console.log('app line 54');
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
       getStyleInfo(productId),
@@ -62,6 +66,8 @@ class App extends React.Component {
       relatedProducts: relProductInfo,
       questionsNAnswers: questionsList,
       outFitStyleId: productInfo.results[0].style_id,
+    }, ()=>{
+      console.log('app line 70');
     });
   }
 
