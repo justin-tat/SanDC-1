@@ -29,7 +29,7 @@ reviewRouter.get('/:product_id', async (req, res) => {
   }
   function findPhotoInDb(reviewId){
     return new Promise((resolve, reject)=>{
-      db.ReviewPhoto.find({review_id:5}).limit(5).exec((err, data)=>{
+      db.ReviewPhoto.find({review_id:reviewId}).limit(5).exec((err, data)=>{
         if(err){
           console.log('err review server line 17', err);
           reject(err);
@@ -44,21 +44,18 @@ reviewRouter.get('/:product_id', async (req, res) => {
   findDataInDb()
   .then(reviews => {
 
-    //console.log('got reviews 46', reviews);
     let reviewId = [];
   for (var i = 0; i < reviews.length; i++){
-    console.log('review id', reviews[i].id);
     reviewId.push(reviews[i]. id);
   }
-  //console.log(reviewId);
-  //find photos for reviews
+
   var promises = [];
   for(var i =0; i < reviewId.length; i++){
    let promise = new Promise ((resolve, reject)=>{
      console.log('should be review id', reviewId[i]);
      findPhotoInDb(reviewId[i])
      .then(data=>{
-       console.log('data line 60', data);
+       console.log('data line 60', data.length);
        resolve(data);
      })
      .catch(err => {
@@ -74,22 +71,23 @@ reviewRouter.get('/:product_id', async (req, res) => {
     console.log(photos);
     photos = photos.flat();
     // console.log('reviews', reviews);
-  //  if (photos.length > 0){
-  //    let id = photos[0].review_id;
-  //    console.log('should be 5', id);
-  //    //console.log(reviewsArr);
-  //    for(var i =0; i < reviewsArr.length; i++){
+   if (photos.length > 0){
+     let id = photos[0].review_id;
+     console.log('should be 5', id);
+     //console.log(reviewsArr);
+     for(var i =0; i < reviews.length; i++){
 
-  //      if(reviewsArr[i].id === id){
-  //        //attach photos arr to review
-  //        console.log('found review', reviewsArr[i]);
-  //        reviewsArr[i].summary = 'foo';
-  //        reviewsArr[i].photos = 'bla';
-  //        setTimeout(() => {console.log(reviewsArr)}, 5000);
+       if(reviews[i].id === id){
+         //attach photos arr to review
+         //console.log('found review', reviews[i]);
 
-  //      }
-  //    }
-  //  }
+         reviews[i].photos = photos;
+         console.log('added photos');
+
+       }
+     }
+   }
+   console.log(reviews[0]);
 
   })
 
