@@ -1,18 +1,10 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/reviews', { useNewUrlParser: true }, { useUnifiedTopology: true }) ;
+ const mongoose = require('mongoose');
 
+ var conn  = mongoose.createConnection('mongodb://localhost/reviews');
+ var conn2  = mongoose.createConnection('mongodb://localhost/reviewPhotos');
 
-// const review_photo_schema = new mongoose.Schema(
-// {
-
-//   id: {type: Number, unique:true, required: true},
-//   review_id: {type: Number, required: true},
-//   url: {type: String, required: true}
-// });
-
-
-const reviewSchema = new mongoose.Schema({
-
+ // stored in 'testA' database
+ var Review    = conn.model('Review', new mongoose.Schema({
   id: {type: Number, unique: true, required: true  },
   product_id: {type: Number,  unique: true, required: true  },
   rating: {type: Number, required: true},
@@ -25,10 +17,17 @@ const reviewSchema = new mongoose.Schema({
   reviewer_email: {type: String, required: true},
   response: {type: String, required: true},
   helpfulness: {type: Number, required: true}
-})
+ }));
 
-let Review = mongoose.model('Review', reviewSchema);
-//let ReviewPhoto = mongoose.model('ReviewPhoto', review_photo_schema);
+ // stored in 'testB' database
+ var ReviewPhoto    = conn2.model('ReviewPhoto', new mongoose.Schema({
+
+  id: {type: Number, unique:true, required: true},
+  review_id: {type: Number, required: true},
+  url: {type: String, required: true}
+ }));
+
+ module.exports.Review = Review;
+ module.exports.ReviewPhoto = ReviewPhoto;
 
 
-module.exports.Review = Review;

@@ -3,7 +3,7 @@ const express = require('express');
 const reviewRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
-
+//const dbPhotos = require('../sdc-overview/sdc-dbs/reviewDb/photos.js');
 // productRouter.use(express.json());
 // productRouter.use(bodyParser.urlencoded({extended: false}));
 // productRouter.use(bodyParser.json());
@@ -18,18 +18,32 @@ reviewRouter.get('/:product_id', async (req, res) => {
           console.log('err review server line 17', err);
           reject(err);
         } else {
-          console.log('server got data from db', data)
+          console.log('server got reviews from db', data.length)
+          resolve(data);
+        }
+      })
+    })
+  }
+  function findPhotoInDb(){
+    return new Promise((resolve, reject)=>{
+      db.ReviewPhoto.find({}).limit(5).exec((err, data)=>{
+        if(err){
+          console.log('err review server line 17', err);
+          reject(err);
+        } else {
+          console.log('server got photos from db', data)
           resolve(data);
         }
       })
     })
   }
 
-  findDataInDb(42)
+  findDataInDb()
+  .then(findPhotoInDb)
 
   .then((data) => {
 
-    console.log('then block', data);
+    console.log('then block');
 
 
   })
