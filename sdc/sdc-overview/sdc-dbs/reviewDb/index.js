@@ -1,10 +1,10 @@
  const mongoose = require('mongoose');
 
- var conn  = mongoose.createConnection('mongodb://localhost/reviews');
- var conn2  = mongoose.createConnection('mongodb://localhost/reviewPhotos');
+ var conn = mongoose.createConnection('mongodb://localhost/reviews');
+ var conn2 = mongoose.createConnection('mongodb://localhost/reviewPhotos');
 
 
- var Review    = conn.model('Review', new mongoose.Schema({
+ var Review  = conn.model('Review', new mongoose.Schema({
   id: {type: Number, unique: true, required: true  },
   product_id: {type: Number,  unique: true, required: true  },
   rating: {type: Number, required: true},
@@ -22,7 +22,7 @@
  }));
 
 
- var ReviewPhoto    = conn2.model('ReviewPhoto', new mongoose.Schema({
+ var ReviewPhoto  = conn2.model('ReviewPhoto', new mongoose.Schema({
 
   id: {type: Number, unique:true, required: true},
   review_id: {type: Number, required: true},
