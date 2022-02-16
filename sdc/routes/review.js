@@ -11,9 +11,12 @@ const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
 
 reviewRouter.get('/:product_id', async (req, res) => {
 
-  function findDataInDb(){
+  let receivedProductId = req.url.slice(1);
+ receivedProductId = 2;
+
+  function findDataInDb(productId){
     return new Promise((resolve, reject)=>{
-      db.Review.find({}).limit(3).exec((err, data)=>{
+      db.Review.find({product_id: receivedProductId}).limit().exec((err, data)=>{
         if(err){
           console.log('err review server line 17', err);
           reject(err);
@@ -24,33 +27,83 @@ reviewRouter.get('/:product_id', async (req, res) => {
       })
     })
   }
-  function findPhotoInDb(){
+  function findPhotoInDb(reviewId){
     return new Promise((resolve, reject)=>{
-      db.ReviewPhoto.find({}).limit(7).exec((err, data)=>{
+      db.ReviewPhoto.find({review_id: reviewId}).limit(7).lean().exec((err, data)=>{
         if(err){
           console.log('err review server line 17', err);
           reject(err);
         } else {
           console.log('server got photos from db', data.length)
-          resolve(data);
+          resolve();
         }
       })
     })
   }
 
   findDataInDb()
-  .then(findPhotoInDb)
+  .then(reviews => {
+    let reviewsArr = [...reviews];
+    console.log('got reviews 46', reviews);
+    let reviewId = [];
+  for (var i = 0; i < reviews.length; i++){
+    console.log('review id', reviews[i].id);
+    reviewId.push(reviews[i]. id);
+  }
+  //find photos for reviews
+  var promises = [];
+  for(var i =0; i < reviewId.length; i++){
+   let promise = new Promise ((resolve, reject)=>{
+     findPhotoInDb(reviewId[i])
+     .then(data=>{
+       resolve(data);
+     })
+     .catch(err => {
+       reject(err);
+     })
+   })
+   promises.push(promise);
+  }
 
-  .then((data) => {
+  Promise.all(promises)
+  .then(photos =>{
+    console.log('resolved promises');
+    console.log(photos);
+    photos = photos.flat();
+    // console.log('reviews', reviews);
+  //  if (photos.length > 0){
+  //    let id = photos[0].review_id;
+  //    console.log('should be 5', id);
+  //    //console.log(reviewsArr);
+  //    for(var i =0; i < reviewsArr.length; i++){
 
-    console.log('then block');
+  //      if(reviewsArr[i].id === id){
+  //        //attach photos arr to review
+  //        console.log('found review', reviewsArr[i]);
+  //        reviewsArr[i].summary = 'foo';
+  //        reviewsArr[i].photos = 'bla';
+  //        setTimeout(() => {console.log(reviewsArr)}, 5000);
+
+  //      }
+  //    }
+  //  }
+
+  })
 
 
   })
-  .catch(err => {
-    console.log(err);
 
-  })
+
+  // .then((data) => {
+
+  //   console.log('then block');
+
+
+  // })
+  // .catch(err => {
+  //   console.log(err);
+
+  // })
 
 
 

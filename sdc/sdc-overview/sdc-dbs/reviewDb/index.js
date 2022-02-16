@@ -3,7 +3,7 @@
  var conn  = mongoose.createConnection('mongodb://localhost/reviews');
  var conn2  = mongoose.createConnection('mongodb://localhost/reviewPhotos');
 
- // stored in 'testA' database
+
  var Review    = conn.model('Review', new mongoose.Schema({
   id: {type: Number, unique: true, required: true  },
   product_id: {type: Number,  unique: true, required: true  },
@@ -16,10 +16,12 @@
   reviewer_name: {type: String, required: true},
   reviewer_email: {type: String, required: true},
   response: {type: String, required: true},
-  helpfulness: {type: Number, required: true}
+  helpfulness: {type: Number, required: true},
+  photos:{ type : Array, required: true }
+
  }));
 
- // stored in 'testB' database
+
  var ReviewPhoto    = conn2.model('ReviewPhoto', new mongoose.Schema({
 
   id: {type: Number, unique:true, required: true},

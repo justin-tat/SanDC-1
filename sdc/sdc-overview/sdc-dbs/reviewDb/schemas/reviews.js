@@ -14,7 +14,8 @@ const reviewSchema = new mongoose.Schema({
   reviewer_name: {type: String, required: true},
   reviewer_email: {type: String, required: true},
   response: {type: String, required: true},
-  helpfulness: {type: Number, required: true}
+  helpfulness: {type: Number, required: true},
+  photos:{ type : Array, required: true }
 })
 
 module.export = reviewSchema;
