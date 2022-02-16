@@ -2,6 +2,7 @@ const express = require('express');
 
 const reviewRouter = require('express').Router();
 const bodyParser = require('body-parser');
+const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
 
 // productRouter.use(express.json());
 // productRouter.use(bodyParser.urlencoded({extended: false}));
@@ -9,6 +10,38 @@ const bodyParser = require('body-parser');
 
 
 reviewRouter.get('/:product_id', async (req, res) => {
+
+  function findDataInDb(){
+    return new Promise((resolve, reject)=>{
+      db.Review.find({}).limit(5).exec((err, data)=>{
+        if(err){
+          console.log('err review server line 17', err);
+          reject(err);
+        } else {
+          console.log('server got data from db', data)
+          resolve(data);
+        }
+      })
+    })
+  }
+
+  findDataInDb(42)
+
+  .then((data) => {
+
+    console.log('then block', data);
+
+
+  })
+  .catch(err => {
+    console.log(err);
+
+  })
+
+
+
+
+
   //
   console.log('review get');
   let answer =  {
