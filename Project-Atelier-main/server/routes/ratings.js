@@ -9,10 +9,10 @@ ratingsRouter.get('/getReviews', async (req, res) => {
   console.log('rating router line 9');
   let productId = req.query.Id;
   let totalReviews = await RatingApi.getTotalReviews(productId, 1);
-  let prevReviews = totalReviews.results.slice();
+  //let prevReviews = totalReviews.results.slice();
   var newReviews = [];
   let i = 2;
-  console.log('prevReviews.length', prevReviews.length);
+  //console.log('prevReviews.length', prevReviews.length);
   // while (prevReviews.length > 0) {
   //   let temp = await RatingApi.getTotalReviews(productId, i);
   //   if (temp) {
@@ -24,7 +24,8 @@ ratingsRouter.get('/getReviews', async (req, res) => {
   //   }
   // }
   newReviews = newReviews.flat();
-  let result = totalReviews.results.concat(newReviews);
+  //let result = totalReviews.results.concat(newReviews);
+  let result = totalReviews;
   res.status(200).send(result);
 });
 
