@@ -13,7 +13,7 @@ reviewRouter.get('/:product_id', async (req, res) => {
 
   function findDataInDb(){
     return new Promise((resolve, reject)=>{
-      db.Review.find({}).limit(5).exec((err, data)=>{
+      db.Review.find({}).limit(3).exec((err, data)=>{
         if(err){
           console.log('err review server line 17', err);
           reject(err);
@@ -26,12 +26,12 @@ reviewRouter.get('/:product_id', async (req, res) => {
   }
   function findPhotoInDb(){
     return new Promise((resolve, reject)=>{
-      db.ReviewPhoto.find({}).limit(5).exec((err, data)=>{
+      db.ReviewPhoto.find({}).limit(7).exec((err, data)=>{
         if(err){
           console.log('err review server line 17', err);
           reject(err);
         } else {
-          console.log('server got photos from db', data)
+          console.log('server got photos from db', data.length)
           resolve(data);
         }
       })

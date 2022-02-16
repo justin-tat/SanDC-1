@@ -25,7 +25,7 @@
   id: {type: Number, unique:true, required: true},
   review_id: {type: Number, required: true},
   url: {type: String, required: true}
- }));
+ }), 'reviewPhotos');
 
  module.exports.Review = Review;
  module.exports.ReviewPhoto = ReviewPhoto;
