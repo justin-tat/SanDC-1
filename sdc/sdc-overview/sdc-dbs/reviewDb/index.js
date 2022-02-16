@@ -2,17 +2,13 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/reviews', { useNewUrlParser: true }, { useUnifiedTopology: true }) ;
 
 
+// const review_photo_schema = new mongoose.Schema(
+// {
 
-
-
-
-const review_photo_schema = new mongoose.Schema(
-{
-
-  id: {type: Number, unique:true, required: true},
-  review_id: {type: Number, required: true},
-  url: {type: String, required: true}
-});
+//   id: {type: Number, unique:true, required: true},
+//   review_id: {type: Number, required: true},
+//   url: {type: String, required: true}
+// });
 
 
 const reviewSchema = new mongoose.Schema({
@@ -32,7 +28,7 @@ const reviewSchema = new mongoose.Schema({
 })
 
 let Review = mongoose.model('Review', reviewSchema);
-let ReviewPhoto = mongoose.model('ReviewPhoto', review_photo_schema);
+//let ReviewPhoto = mongoose.model('ReviewPhoto', review_photo_schema);
 
 
 module.exports.Review = Review;
