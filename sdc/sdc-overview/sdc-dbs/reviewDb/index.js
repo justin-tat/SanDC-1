@@ -21,6 +21,13 @@
 
  }));
 
+ var Char = conn.model('Char', new mongoose.Schema({
+  id: {type: Number, unique: true, required: true},
+  product_id: {type: Number, required: true},
+  name: {type: String, required: true}
+
+ }), 'chars');
+
 
  var ReviewPhoto  = conn2.model('ReviewPhoto', new mongoose.Schema({
 
@@ -31,5 +38,5 @@
 
  module.exports.Review = Review;
  module.exports.ReviewPhoto = ReviewPhoto;
-
+ module.exports.Char = Char;
 
