@@ -67,7 +67,7 @@ reviewRouter.get('/:product_id', async (req, res) => {
                     }
                    }
                 }
-                console.log(reviews);
+                //console.log(reviews);
                 res.send(reviews);
 
        })
@@ -78,8 +78,24 @@ reviewRouter.get('/:product_id', async (req, res) => {
 
 });
 
-reviewRouter.get('/42', async (req, res) => {
-  res.send('it\'s working!');
+reviewRouter.get('/meta/:product_id', async (req, res) => {
+  console.log('src router line 82');
+  let answer = {
+      product_id: '64620',
+      ratings: { '1': '3', '4': '2', '5': '11' },
+      recommended: { false: '1', true: '15' },
+      characteristics: {
+        Fit: { id: 216798, value: '2.5714285714285714' },
+        Length: { id: 216799, value: '2.1428571428571429' },
+        Comfort: { id: 216800, value: '2.7142857142857143' },
+        Quality: { id: 216801, value: '2.5714285714285714' }
+      }
+    }
+    res.send(answer);
 });
+
+
+
+
 
 module.exports = reviewRouter;
