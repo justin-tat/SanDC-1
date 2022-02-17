@@ -33,6 +33,7 @@ reviewRouter.get('/:product_id', async (req, res) => {
     })
   }
 
+
   findDataInDb()
   .then(reviews => {
     let reviewId = [];
@@ -91,6 +92,23 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
         Quality: { id: 216801, value: '2.5714285714285714' }
       }
     }
+    function findCharInDb(productId){
+      return new Promise((resolve, reject)=>{
+        db.Char.find({product_id:productId}).limit(5).exec((err, data)=>{
+          if(err){
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        })
+      })
+    }
+    
+   findCharInDb(1)
+   .then(result => {
+     console.log('find chars', result);
+   })
+
     res.send(answer);
 });
 
