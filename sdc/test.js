@@ -16,5 +16,15 @@ describe('GET /', function() {
 
 
 
+describe('GET /fec2/hr-rpp/reviews/42', function() {
+  this.timeout(15000);
+
+  it('responds with 200',  function(done) {
+  request(app)
+    .get('/fec2/hr-rpp/reviews/42')
+    .expect(200, done);
+  });
+});
+
 
 

@@ -78,4 +78,8 @@ reviewRouter.get('/:product_id', async (req, res) => {
 
 });
 
+reviewRouter.get('/42', async (req, res) => {
+  res.send('it\'s working!');
+});
+
 module.exports = reviewRouter;
