@@ -92,6 +92,17 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
         Quality: { id: 216801, value: '2.5714285714285714' }
       }
     }
+    let a = {
+      product_id: '64620',
+      ratings: { '4': 1, '5': 1 },
+      recommended: { false: 0, true: 2 },
+      characteristics: {
+        Fit: { id: 1, value: 4 },
+        Length: { id: 3, value: 5 },
+        Comfort: { id: 4, value: 4 },
+        Quality: { id: 2, value: 3 }
+      }
+    }
     let id = req.url.slice(-5);
 
     //ratings are in reviews collection
@@ -112,7 +123,7 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
     findRatingInDb(id)
 
     .then(result => {
-      console.log('found ratings in reviews coll', result);
+      //console.log('found ratings in reviews coll', result);
       let resultAnswer = {
         product_id:id
       };
@@ -141,15 +152,108 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 
 
       }
+     console.log ('ratingValline 155', ratingVal);
+     //{ '4': 1, '5': 1 }
+     for (var key in ratingVal){
+       ratingVal[key] = ratingVal[key].toString();
 
-      recomObj.false = falseCount;
-      recomObj.true = trueCount;
+     }
+     console.log ('ratingValline 161', ratingVal);
 
-      console.log(recomObj);
+
+      recomObj.false = falseCount.toString();
+      recomObj.true = trueCount.toString();
+
+      //console.log(recomObj);
       resultAnswer.ratings = ratingVal;
       resultAnswer.recommended = recomObj;
-      console.log(resultAnswer);
-      //
+      //console.log(resultAnswer);
+      //found chars
+
+        findCharInDb(1)
+   .then(result => {
+    findReviewCharInDb(1).
+    then(reviewCharResult => {
+     //create char
+
+let arr = [];
+let characteristic_ids = new Set();
+for (review of reviewCharResult) {
+  characteristic_ids.add(review['characteristic_id']);
+}
+console.log(51, characteristic_ids);
+
+// helper function to count average of array. [1,3] => 2
+array_med = (x) => {
+  return x.reduce( (a,b) => {return a+b} ) / x.length ;
+}
+
+  for (var i =0; i < reviewCharResult.length; i++){
+    let item = reviewCharResult[i];
+    let obj = {};
+    obj['id'] = item.characteristic_id;
+    obj['value']= item.value;
+    arr.push (obj);
+  }
+
+  console.log(65, arr);
+  var resArr = [];
+
+  for (var i =0; i < arr.length; i++){
+    item = arr[i];
+    var t = resArr.findIndex(x => (x.id == item.id));
+    if(t <= -1){
+      item['value'] = array_med(arr.filter(x => (x.id == item.id) ).map(x=>x.value) ).toString();
+      resArr.push(item);
+      }
+  };
+console.log('line 191', resArr);
+let obj = {};
+for (var i =0; i < result.length; i++){
+  let item = result[i];
+  let name= item.name;
+  console.log(item.name);
+  obj[name] = {};
+  for (var j =0; j < resArr.length; j++){
+    let id = resArr[j].id;
+    if (id === item.id){
+      obj[name] = resArr[i];
+    }
+  }
+}
+
+console.log('line 206', obj);
+resultAnswer.characteristics = obj;
+console.log(resultAnswer);
+res.send(resultAnswer);
+
+
+
+
+
+
+
+    })
+     //console.log('find chars', result);
+
+     //finding char values by its id
+  //      findReviewCharInDb(1)
+  //  .then(result => {
+  //    console.log('found review chars', result);
+  //    console.log('line 168 charObj', charObj);
+  //    for(var i =0; i < result.length; i++){
+  //      for (var key in charObj){
+  //        let charReview = result[i];
+  //        if (charReview.characteristic_id === charObj.key[id]){
+  //          charObj.key[value] = charReview.value;
+  //        }
+  //      }
+  //    }
+  //    console.log('building char', charObj);
+
+  //  })
+
+   })
 
     })
 
@@ -190,7 +294,8 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
   //    console.log('found review chars', result);
   //  })
 
-    res.send(answer);
+    //res.send(answer);
+
 });
 
 
