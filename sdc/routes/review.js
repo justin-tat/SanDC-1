@@ -92,6 +92,70 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
         Quality: { id: 216801, value: '2.5714285714285714' }
       }
     }
+    let id = req.url.slice(-5);
+
+    //ratings are in reviews collection
+    //find them by product_id, write in ratings object
+
+    function findRatingInDb(productId){
+      return new Promise((resolve, reject)=>{
+        db.Review.find({product_id: 1}).limit().exec((err, data)=>{
+          if(err){
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        })
+      })
+    }
+
+    findRatingInDb(id)
+
+    .then(result => {
+      console.log('found ratings in reviews coll', result);
+      let resultAnswer = {
+        product_id:id
+      };
+
+      let ratingVal = {}
+      let recomObj = {};
+      let falseCount = 0;
+      let trueCount = 0;
+
+      for(var i =0; i < result.length; i++){
+        //find ratings
+        let review = result[i];
+        let rating = review.rating
+        if (ratingVal[rating] === undefined){
+          ratingVal[rating] = 1;
+        } else {
+          ratingVal[rating]++;
+        }
+        //find recommendations
+       let recom = review.recommend;
+       if (recom === 'false'){
+         falseCount++;
+       }else {
+         trueCount++;
+       }
+
+
+      }
+
+      recomObj.false = falseCount;
+      recomObj.true = trueCount;
+
+      console.log(recomObj);
+      resultAnswer.ratings = ratingVal;
+      resultAnswer.recommended = recomObj;
+      console.log(resultAnswer);
+      //
+
+    })
+
+
+
+
     function findCharInDb(productId){
       return new Promise((resolve, reject)=>{
         db.Char.find({product_id:productId}).limit(5).exec((err, data)=>{
@@ -121,10 +185,10 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
   //    console.log('find chars', result);
   //  })
 
-   findReviewCharInDb(1)
-   .then(result => {
-     console.log('found review chars', result);
-   })
+  //  findReviewCharInDb(1)
+  //  .then(result => {
+  //    console.log('found review chars', result);
+  //  })
 
     res.send(answer);
 });
