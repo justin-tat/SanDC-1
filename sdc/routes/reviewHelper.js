@@ -39,6 +39,18 @@ function findRatingInDb(productId){
   })
 }
 
+function postReviewInDb(review){
+  return new Promise((resolve, reject)=>{
+    db.save(review).limit().exec((err, data)=>{
+      if(err){
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  })
+}
+
 function findCharInDb(productId){
   return new Promise((resolve, reject)=>{
     db.Char.find({product_id:productId}).limit(5).exec((err, data)=>{

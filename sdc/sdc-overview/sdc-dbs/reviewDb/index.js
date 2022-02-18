@@ -42,8 +42,42 @@
   url: {type: String, required: true}
  }), 'reviewPhotos');
 
+ let save = (review, callback) => {
+
+     let review = new Review({
+
+  id: review.id,
+  product_id: review.product_id,
+  rating: review.rating,
+  date: review.date,
+  summary: review.summary,
+  body: review.body,
+  recommend: review.recommend,
+  reported: false,
+  reviewer_name: review.name,
+  reviewer_email: review.email,
+  response: null,
+  helpfulness: 0,
+  photos:review.photos
+     })
+
+  review.save(review, (err, result) => {
+    Review.findOneAndUpdate(review.id, review, ((err, result) => {
+      if (err){
+        console.log('err saving');
+        callback(err, null);
+      } else {
+        console.log('saved entry');
+        callback(null, result);
+      }
+    }))
+  })
+
+ }
+
  module.exports.Review = Review;
  module.exports.ReviewPhoto = ReviewPhoto;
  module.exports.Char = Char;
  module.exports.CharReview = CharReview;
+ module.exports.save = save;
 
