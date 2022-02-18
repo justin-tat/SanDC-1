@@ -28,6 +28,12 @@
 
  }), 'chars');
 
+ var CharReview = conn.model('CharReview', new mongoose.Schema({
+   id: {type: Number, unique: true, required: true},
+   characteristic_id: {type: Number, required: true},
+   review_id: {type:Number, required: true},
+   value: {type:Number, required: true}
+ }), 'charReviews');
 
  var ReviewPhoto  = conn2.model('ReviewPhoto', new mongoose.Schema({
 
@@ -39,4 +45,5 @@
  module.exports.Review = Review;
  module.exports.ReviewPhoto = ReviewPhoto;
  module.exports.Char = Char;
+ module.exports.CharReview = CharReview;
 

@@ -103,10 +103,27 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
         })
       })
     }
-    
-   findCharInDb(1)
+
+    function findReviewCharInDb(reviewId){
+      return new Promise((resolve, reject) => {
+        db.CharReview.find({review_id:reviewId}).exec((err, data)=>{
+          if(err){
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        })
+      })
+    }
+
+  //  findCharInDb(1)
+  //  .then(result => {
+  //    console.log('find chars', result);
+  //  })
+
+   findReviewCharInDb(1)
    .then(result => {
-     console.log('find chars', result);
+     console.log('found review chars', result);
    })
 
     res.send(answer);
