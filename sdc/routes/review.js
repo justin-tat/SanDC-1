@@ -152,22 +152,10 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 });
 
 reviewRouter.post('/', async (req, res) => {
-  console.log('posted new review');
-  // req.body = {
-  //   product_id: 64620,
-  //   rating: 5,
-  //   summary: 'Best example ever! ',
-  //   body: "fbdfnhb;kdngfhbldfkgm[odfngjbifkn ptjhgesrgmv;'sdbldjhnb[tshjmn[dfb f[cln bhperihp;gmv, dsgbdfhrtjtrjnrtyjhnfg",
-  //   recommend: true,
-  //   name: 'example',
-  //   email: 'example@gmail.com',
-  //   photos: [],
-  //   characteristics: { '1': 2, '2': 3, '3': 2, '4': 2 }
-  // }
-  //console.log(req.body);
+  console.log(req.body);
   //find the id of the last entry in db
   db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
-    console.log( entry );
+    //console.log( entry );
     let newReviewId = entry.id + 1;
     console.log(newReviewId);
     let newObj = {};
@@ -186,10 +174,12 @@ reviewRouter.post('/', async (req, res) => {
     newObj.helpfulness = 0;
 
     console.log('newObj', newObj);
-      //create entry in reviews table
+     //save in reviews table
    helper.saveDataToDb(newObj)
    .then(data => {
      console.log('server post line 192', data);
+     //save photos if they exists
+
    })
   });
 
