@@ -9,7 +9,7 @@ const helper = require('./reviewHelper.js');
 reviewRouter.get('/:product_id', async (req, res) => {
 
   let productId = req.url.slice(1);
-  productId = 2;
+  productId = 5;
 
 
   helper.findDataInDb(productId)
@@ -153,7 +153,19 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 
 reviewRouter.post('/', async (req, res) => {
   console.log('posted new review');
-  console.log(req);
+  // req.body = {
+  //   product_id: 64620,
+  //   rating: 5,
+  //   summary: 'Best example ever! ',
+  //   body: "fbdfnhb;kdngfhbldfkgm[odfngjbifkn ptjhgesrgmv;'sdbldjhnb[tshjmn[dfb f[cln bhperihp;gmv, dsgbdfhrtjtrjnrtyjhnfg",
+  //   recommend: true,
+  //   name: 'example',
+  //   email: 'example@gmail.com',
+  //   photos: [],
+  //   characteristics: { '1': 2, '2': 3, '3': 2, '4': 2 }
+  // }
+  console.log(req.body);
+  //create entry in reviews table
 
 })
 

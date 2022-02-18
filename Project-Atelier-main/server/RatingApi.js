@@ -81,6 +81,7 @@ const postReview = async (body) => {
     'characteristics': {}
   };
   let chars = body.Chars;
+  console.log('chars', body.Chars);
   for (let i = 0; i < chars.length; i++) {
     if (chars[i].Id) {
       params['characteristics'][chars[i].Id] = chars[i].val;
@@ -89,11 +90,14 @@ const postReview = async (body) => {
   let options = {
     method: 'POST',
     //url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
-    url: `http://localhost:3050/fec2/hr-rpp/reviews`,
+    url: 'http://localhost:3050/fec2/hr-rpp/reviews',
     headers: { Authorization: gitToken.Token },
     data: params
   };
   return axios(options)
+    .then(response => {
+      console.log('response post line 98', response);
+    })
     .catch((err) => {
       console.log('This is the post review error: ', err);
     });
