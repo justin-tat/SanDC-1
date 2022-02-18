@@ -9,9 +9,9 @@ let productIdglobal;
 reviewRouter.get('/:product_id', async (req, res) => {
   console.log('req.url', req.url);
   let productId = req.url.replace('/','');
-  productId = 2;
-  productIdglobal = productId;
- console.log('server line 14', productIdglobal);
+  // productId = 2;
+  // productIdglobal = productId;
+ //console.log('server line 14', productIdglobal);
 
   helper.findDataInDb(productId)
   .then(reviews => {
