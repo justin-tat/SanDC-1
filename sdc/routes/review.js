@@ -3,6 +3,7 @@ const express = require('express');
 const reviewRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
+const helper = require('./reviewHelper.js');
 
 
 reviewRouter.get('/:product_id', async (req, res) => {
@@ -81,47 +82,32 @@ reviewRouter.get('/:product_id', async (req, res) => {
 
 reviewRouter.get('/meta/:product_id', async (req, res) => {
   console.log('src router line 82');
-  let answer = {
-      product_id: '64620',
-      ratings: { '1': '3', '4': '2', '5': '11' },
-      recommended: { false: '1', true: '15' },
-      characteristics: {
-        Fit: { id: 216798, value: '2.5714285714285714' },
-        Length: { id: 216799, value: '2.1428571428571429' },
-        Comfort: { id: 216800, value: '2.7142857142857143' },
-        Quality: { id: 216801, value: '2.5714285714285714' }
-      }
-    }
-    let a = {
-      product_id: '64620',
-      ratings: { '4': 1, '5': 1 },
-      recommended: { false: 0, true: 2 },
-      characteristics: {
-        Fit: { id: 1, value: 4 },
-        Length: { id: 3, value: 5 },
-        Comfort: { id: 4, value: 4 },
-        Quality: { id: 2, value: 3 }
-      }
-    }
-    let id = req.url.slice(-5);
+  // let answer = {
+  //     product_id: '64620',
+  //     ratings: { '1': '3', '4': '2', '5': '11' },
+  //     recommended: { false: '1', true: '15' },
+  //     characteristics: {
+  //       Fit: { id: 216798, value: '2.5714285714285714' },
+  //       Length: { id: 216799, value: '2.1428571428571429' },
+  //       Comfort: { id: 216800, value: '2.7142857142857143' },
+  //       Quality: { id: 216801, value: '2.5714285714285714' }
+  //     }
+  //   }
+  let id = req.url.slice(-5);
 
-    //ratings are in reviews collection
-    //find them by product_id, write in ratings object
+    // function findRatingInDb(productId){
+    //   return new Promise((resolve, reject)=>{
+    //     db.Review.find({product_id: 1}).limit().exec((err, data)=>{
+    //       if(err){
+    //         reject(err);
+    //       } else {
+    //         resolve(data);
+    //       }
+    //     })
+    //   })
+    // }
 
-    function findRatingInDb(productId){
-      return new Promise((resolve, reject)=>{
-        db.Review.find({product_id: 1}).limit().exec((err, data)=>{
-          if(err){
-            reject(err);
-          } else {
-            resolve(data);
-          }
-        })
-      })
-    }
-
-    findRatingInDb(id)
-
+    helper.findRatingInDb(id)
     .then(result => {
       //console.log('found ratings in reviews coll', result);
       let resultAnswer = {

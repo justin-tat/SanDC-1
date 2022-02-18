@@ -27,9 +27,22 @@ function findPhotoInDb(reviewId){
   })
 }
 
+function findRatingInDb(productId){
+  return new Promise((resolve, reject)=>{
+    db.Review.find({product_id: 1}).limit().exec((err, data)=>{
+      if(err){
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  })
+}
+
 module.exports = {
   findDataInDb,
-  findPhotoInDb
+  findPhotoInDb,
+  findRatingInDb
 }
 
 
