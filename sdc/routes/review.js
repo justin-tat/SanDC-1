@@ -164,7 +164,7 @@ reviewRouter.post('/', async (req, res) => {
   //   photos: [],
   //   characteristics: { '1': 2, '2': 3, '3': 2, '4': 2 }
   // }
-  console.log(req.body);
+  //console.log(req.body);
   //find the id of the last entry in db
   db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
     console.log( entry );
@@ -187,8 +187,10 @@ reviewRouter.post('/', async (req, res) => {
 
     console.log('newObj', newObj);
       //create entry in reviews table
-   helper.save
-
+   helper.saveDataToDb(newObj)
+   .then(data => {
+     console.log('server post line 192', data);
+   })
   });
 
 

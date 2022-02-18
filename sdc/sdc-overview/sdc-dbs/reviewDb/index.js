@@ -43,6 +43,7 @@
  }), 'reviewPhotos');
 
  let save = (review, callback) => {
+   console.log('received review in db line 46', review);
 
      let newReview = new Review({
 
@@ -54,23 +55,23 @@
   body: review.body,
   recommend: review.recommend,
   reported: false,
-  reviewer_name: review.name,
-  reviewer_email: review.email,
-  response: null,
+  reviewer_name: review.reviewer_name,
+  reviewer_email: review.reviewer_email,
+  response: review.response,
   helpfulness: 0,
   photos:review.photos
      })
 
   newReview.save(review, (err, result) => {
-    Review.findOneAndUpdate(review.id, review, ((err, result) => {
-      if (err){
+        if (err){
         console.log('err saving');
         callback(err, null);
       } else {
         console.log('saved entry');
+        console.log('db line 71', result);
         callback(null, result);
       }
-    }))
+
   })
 
  }

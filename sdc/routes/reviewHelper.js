@@ -39,13 +39,15 @@ function findRatingInDb(productId){
   })
 }
 
-function postReviewInDb(review){
-  return new Promise((resolve, reject)=>{
-    db.save(review).limit().exec((err, data)=>{
+function saveDataToDb(review){
+  return new Promise((resolve, reject)=> {
+    db.save(review, (err, result) => {
       if(err){
+        console.log(err);
         reject(err);
       } else {
-        resolve(data);
+        console.log('helpers line 49');
+        resolve(result);
       }
     })
   })
@@ -81,7 +83,7 @@ module.exports = {
   findRatingInDb,
   findCharInDb,
   findReviewCharInDb,
-  postReviewInDb
+  saveDataToDb
 }
 
 
