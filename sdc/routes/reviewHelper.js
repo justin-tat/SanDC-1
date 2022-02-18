@@ -53,6 +53,7 @@ function saveDataToDb(review){
   })
 }
 
+
 function findCharInDb(productId){
   return new Promise((resolve, reject)=>{
     db.Char.find({product_id:productId}).limit(5).exec((err, data)=>{

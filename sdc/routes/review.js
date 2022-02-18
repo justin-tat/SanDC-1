@@ -5,12 +5,13 @@ const bodyParser = require('body-parser');
 const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
 const helper = require('./reviewHelper.js');
 
-
+let productIdglobal;
 reviewRouter.get('/:product_id', async (req, res) => {
-
-  let productId = req.url.slice(1);
+  console.log('req.url', req.url);
+  let productId = req.url.replace('/','');
   productId = 2;
-
+  productIdglobal = productId;
+ console.log('server line 14', productIdglobal);
 
   helper.findDataInDb(productId)
   .then(reviews => {
@@ -58,8 +59,10 @@ reviewRouter.get('/:product_id', async (req, res) => {
 });
 
 reviewRouter.get('/meta/:product_id', async (req, res) => {
+  //req.url = meta/product_id=56546546
+  req.url = req.url.slice(req.url.search(/\d+$/));
 
-  let id = req.url.slice(-5);
+  let id = req.url;
 
     helper.findRatingInDb(id)
     .then(result => {
@@ -152,7 +155,8 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 });
 
 reviewRouter.post('/', async (req, res) => {
-  console.log(req.body);
+
+  //console.log(req.body);
   //find the id of the last entry in db
   db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
     //console.log( entry );
@@ -173,12 +177,18 @@ reviewRouter.post('/', async (req, res) => {
     newObj.response = 'null';
     newObj.helpfulness = 0;
 
-    console.log('newObj', newObj);
+    //console.log('newObj', newObj);
      //save in reviews table
    helper.saveDataToDb(newObj)
    .then(data => {
-     console.log('server post line 192', data);
-     //save photos if they exists
+     //console.log('server post line 192', data);
+     //save chars in db
+     //find chars id in the chars collection
+    let productId = req.body.product_id;
+    helper.findCharInDb(1)
+    .then(chars => {
+      console.log(chars);
+    })
 
    })
   });
