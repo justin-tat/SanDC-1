@@ -1,9 +1,18 @@
 const express = require('express');
 const app = express();
 const port = 3050;
+const bodyParser = require('body-parser')
+
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 const productRouter = require('./routes/product.js');
 const reviewRouter = require('./routes/review.js');
+
 
 
 app.get('/', (req, res) => {
