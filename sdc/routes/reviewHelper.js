@@ -80,7 +80,8 @@ module.exports = {
   findPhotoInDb,
   findRatingInDb,
   findCharInDb,
-  findReviewCharInDb
+  findReviewCharInDb,
+  postReviewInDb
 }
 
 

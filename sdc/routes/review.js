@@ -9,7 +9,7 @@ const helper = require('./reviewHelper.js');
 reviewRouter.get('/:product_id', async (req, res) => {
 
   let productId = req.url.slice(1);
-  productId = 5;
+  productId = 2;
 
 
   helper.findDataInDb(productId)
@@ -165,7 +165,32 @@ reviewRouter.post('/', async (req, res) => {
   //   characteristics: { '1': 2, '2': 3, '3': 2, '4': 2 }
   // }
   console.log(req.body);
-  //create entry in reviews table
+  //find the id of the last entry in db
+  db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
+    console.log( entry );
+    let newReviewId = entry.id + 1;
+    console.log(newReviewId);
+    let newObj = {};
+    newObj.photos = req.body.photos;
+    newObj.id = newReviewId;
+    newObj.product_id= req.body.product_id;
+    newObj.rating= req.body.rating;
+    newObj.date = Date.now().toString();
+    newObj.summary= req.body.summary;
+    newObj.body= req.body.body;
+    newObj.recommend= req.body.recommend;
+    newObj.reported = false;
+    newObj.reviewer_name = req.body.name;
+    newObj.reviewer_email = req.body.email;
+    newObj.response = 'null';
+    newObj.helpfulness = 0;
+
+    console.log('newObj', newObj);
+      //create entry in reviews table
+   helper.save
+
+  });
+
 
 })
 

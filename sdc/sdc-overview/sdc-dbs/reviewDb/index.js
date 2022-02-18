@@ -44,7 +44,7 @@
 
  let save = (review, callback) => {
 
-     let review = new Review({
+     let newReview = new Review({
 
   id: review.id,
   product_id: review.product_id,
@@ -61,7 +61,7 @@
   photos:review.photos
      })
 
-  review.save(review, (err, result) => {
+  newReview.save(review, (err, result) => {
     Review.findOneAndUpdate(review.id, review, ((err, result) => {
       if (err){
         console.log('err saving');
