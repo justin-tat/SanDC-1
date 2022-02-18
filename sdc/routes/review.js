@@ -151,4 +151,11 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 
 });
 
+reviewRouter.post('/', async (req, res) => {
+  console.log('posted new review');
+  console.log(req);
+
+})
+
+
 module.exports = reviewRouter;
