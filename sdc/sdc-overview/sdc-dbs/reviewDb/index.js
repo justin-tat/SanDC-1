@@ -71,14 +71,71 @@
         console.log('db line 71', result);
         callback(null, result);
       }
-
   })
 
  }
+
+ let saveChar = (chars, callback) => {
+   //overwrite duplicates - use update many in mongoose (upsert)
+   //if the value exist - update it, else insert it
+   var allpromises = [];
+   console.log(82, 'chars = ', chars);
+   for (var i = 0; i < chars.length; i++){
+     var charToSave = chars[i];
+     console.log('should be charToSave', charToSave);
+     var promise = new Promise((resolve, reject)=>{
+       var char = new Char({
+         id: charToSave.id,
+         product_id: charToSave.product_id,
+         name: charToSave.name
+        }); //end of Char def
+        char.save(char, (err, result) => {
+          console.log('saving i=char',  i, '=', char);
+          if(err){
+            console.log('err.code = ', err.code);
+            if (err.code = '11000'){
+              console.log('Duplicate entry, running Update');
+              Char.findOneAndUpdate(char.id, char, {upsert: true}, ((err, result) => {
+              // Char.findByIdAndUpdate(char.id, char, ((err, result) => {
+                if (err){
+                  console.log('err updating');
+                  reject();
+                  callback(err, null);
+                } else { //end of if(err)true
+                  console.log('updated entry');
+                  resolve();
+                } //end of if(err)
+              })) //end of findOneAndUpdate
+            } else { //end of if 11000
+              reject();
+            } // end of else for if 11000
+
+          } else {//if err
+        console.log('saved entry');
+        resolve();
+      };
+    });// end of char.save
+  }); // end of promise
+  allpromises.push(promise);
+} // end of for loop
+
+
+    Promise.all(allpromises)
+    .then(result =>{
+      console.log('resolved all promises');
+      console.log('db 77 added ', count.addedCount);
+      console.log('db 78 updated', count.updatedCount);
+
+     callback(null, result);
+    }); //end of then
+  };//end of saveChar
+
+
 
  module.exports.Review = Review;
  module.exports.ReviewPhoto = ReviewPhoto;
  module.exports.Char = Char;
  module.exports.CharReview = CharReview;
  module.exports.save = save;
+ module.exports.saveChar = saveChar;
 

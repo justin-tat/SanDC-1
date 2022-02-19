@@ -274,7 +274,10 @@ reviewRouter.post('/', async (req, res) => {
      }
 
      console.log(newArrForChars);
-
+     helper.saveCharsToDb(newArrForChars)
+     .then(result => {
+       console.log('saved chars', result);
+     })
 
 
 
