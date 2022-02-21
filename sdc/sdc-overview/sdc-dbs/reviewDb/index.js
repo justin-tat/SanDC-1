@@ -5,7 +5,7 @@
 
 
  var Review  = conn.model('Review', new mongoose.Schema({
-  id: {type: Number, unique: true, required: true  },
+  id: {type: Number, unique: true, required: true, index: true  },
   product_id: {type: Number,  unique: true, required: true  },
   rating: {type: Number, required: true},
   date: {type: String, required: true},
@@ -22,7 +22,7 @@
  }));
 
  var Char = conn.model('Char', new mongoose.Schema({
-  id: {type: Number, unique: true, required: true},
+  id: {type: Number, unique: true, required: true, index: true},
   product_id: {type: Number, required: true},
   name: {type: String, required: true}
 
@@ -31,14 +31,14 @@
  var CharReview = conn.model('CharReview', new mongoose.Schema({
    id: {type: Number, unique: true, required: true},
    characteristic_id: {type: Number, required: true},
-   review_id: {type:Number, required: true},
+   review_id: {type:Number, required: true, index: true},
    value: {type:Number, required: true}
  }), 'charReviews');
 
  var ReviewPhoto  = conn2.model('ReviewPhoto', new mongoose.Schema({
 
-  id: {type: Number, unique:true, required: true},
-  review_id: {type: Number, required: true},
+  id: {type: Number, unique:true, required: true, index: true},
+  review_id: {type: Number, required: true, index: true},
   url: {type: String, required: true}
  }), 'reviewPhotos');
 

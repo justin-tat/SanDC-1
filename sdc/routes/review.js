@@ -7,7 +7,6 @@ const helper = require('./reviewHelper.js');
 
 let productIdglobal;
 reviewRouter.get('/:product_id', async (req, res) => {
-  console.log('req.url', req.url);
   let productId = req.url.replace('/','');
   // productId = 2;
   // productIdglobal = productId;
@@ -36,7 +35,7 @@ reviewRouter.get('/:product_id', async (req, res) => {
 
        Promise.all(promises)
       .then(photos =>{
-         console.log('resolved promises');
+        //  console.log('resolved promises');
          photos = photos.flat();
                if (photos.length > 0){
                 let id = photos[0].review_id;
@@ -103,7 +102,7 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
       //find chars
       helper.findCharInDb(id)
       .then(result => {
-        console.log('result 106', result);
+        // console.log('result 106', result);
          helper.findReviewCharInDb(id)
         .then(reviewCharResult => {
          //create char
@@ -119,13 +118,13 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 
             for (var i =0; i < reviewCharResult.length; i++){
               let item = reviewCharResult[i];
-              console.log('item line 122', item);
+              // console.log('item line 122', item);
               let obj = {};
               obj['id'] = item.characteristic_id;
               obj['value']= item.value;
                arr.push (obj);
             }
-           console.log('line 127 arr', arr);
+          //  console.log('line 127 arr', arr);
             var resArr = [];
 
             for (var i =0; i < arr.length; i++){
@@ -136,11 +135,11 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
                resArr.push(item);
                }
             };
-            console.log('resArr line 138', resArr);
+            // console.log('resArr line 138', resArr);
             let obj = {};
             for (var i =0; i < result.length; i++){
               let item = result[i];
-              console.log('item line 142', item);
+              // console.log('item line 142', item);
               let name= item.name;
               obj[name] = {};
               for (var j =0; j < resArr.length; j++){
@@ -151,7 +150,7 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
               }
             }
             resultAnswer.characteristics = obj;
-            console.log('resultAnswer line 152', resultAnswer);
+            // console.log('resultAnswer line 152', resultAnswer);
             res.send(resultAnswer);
         })
       })
@@ -160,13 +159,11 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 });
 
 reviewRouter.post('/', async (req, res) => {
-
-  console.log(req.body);
   //find the id of the last entry in db
   db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
     //console.log( entry );
     let newReviewId = entry.id + 1;
-    console.log(newReviewId);
+    // console.log(newReviewId);
     let newObj = {};
     newObj.photos = req.body.photos;
     newObj.id = newReviewId;
@@ -276,7 +273,7 @@ reviewRouter.post('/', async (req, res) => {
      console.log(newArrForChars);
      helper.saveCharsToDb(newArrForChars)
      .then(result => {
-       console.log('saved chars', result);
+      //  console.log('saved chars', result);
      })
 
 

@@ -8,7 +8,6 @@ function findDataInDb(productId){
       if(err){
         reject(err);
       } else {
-        console.log('helper line 11');
         resolve(data);
       }
     })
