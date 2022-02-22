@@ -6,23 +6,26 @@ ratingsRouter.get('/', (req, res) => {
 });
 
 ratingsRouter.get('/getReviews', async (req, res) => {
+  console.log('rating router line 9');
   let productId = req.query.Id;
   let totalReviews = await RatingApi.getTotalReviews(productId, 1);
-  let prevReviews = totalReviews.results.slice();
+  //let prevReviews = totalReviews.results.slice();
   var newReviews = [];
   let i = 2;
-  while (prevReviews.length > 0) {
-    let temp = await RatingApi.getTotalReviews(productId, i);
-    if (temp) {
-      prevReviews = temp.results.slice();
-      if (prevReviews.length > 0) {
-        newReviews.push(prevReviews.slice());
-        i++;
-      }
-    }
-  }
+  //console.log('prevReviews.length', prevReviews.length);
+  // while (prevReviews.length > 0) {
+  //   let temp = await RatingApi.getTotalReviews(productId, i);
+  //   if (temp) {
+  //     prevReviews = temp.results.slice();
+  //     if (prevReviews.length > 0) {
+  //       newReviews.push(prevReviews.slice());
+  //       i++;
+  //     }
+  //   }
+  // }
   newReviews = newReviews.flat();
-  let result = totalReviews.results.concat(newReviews);
+  //let result = totalReviews.results.concat(newReviews);
+  let result = totalReviews;
   res.status(200).send(result);
 });
 
@@ -38,6 +41,7 @@ ratingsRouter.post('/updateReported', async (req, res) => {
 });
 
 ratingsRouter.get('/ratingOverview', async (req, res) => {
+  console.log('rating router line 42');
   let productId = req.query.Id;
   let ratingOverview = await RatingApi.ratingOverview(productId);
   let ratingAverage = await averageRate(ratingOverview.ratings, ratingOverview.recommended);

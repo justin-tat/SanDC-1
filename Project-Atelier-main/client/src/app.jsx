@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopSearchBar from './components/TopSearchBar/TopSearchBar.jsx';
-import SiteWideMessage from './components/SiteWideMessage/SiteWideMessage.jsx';
-import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
-import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
-import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
+// import TopSearchBar from './components/TopSearchBar/TopSearchBar.jsx';
+// import SiteWideMessage from './components/SiteWideMessage/SiteWideMessage.jsx';
+// import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
+// import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
+// import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
 import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
 import axios from 'axios';
 
@@ -37,17 +37,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log('app line 40');
     this.updateProduct(this.state.productId);
   }
 
   handleReviews(reviews) {
+    console.log('app line 45');
     this.setState({totalReviews: reviews});
   }
   handleAverageRate(rate) {
+    console.log('app line 49');
     this.setState({averageRate: rate});
   }
 
   async updateProduct(productId) {
+    console.log('app line 54');
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
       getStyleInfo(productId),
@@ -62,6 +66,8 @@ class App extends React.Component {
       relatedProducts: relProductInfo,
       questionsNAnswers: questionsList,
       outFitStyleId: productInfo.results[0].style_id,
+    }, ()=>{
+      console.log('app line 70');
     });
   }
 
@@ -122,9 +128,9 @@ class App extends React.Component {
     } else {
       return (
         <div>
-          <TopSearchBar />
-          <SiteWideMessage />
-          <ProductOverviewWithClickData
+          {/* <TopSearchBar />
+          <SiteWideMessage /> */}
+          {/* <ProductOverviewWithClickData
             currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle}
             currentRatings={this.state.averageRate}
@@ -133,13 +139,13 @@ class App extends React.Component {
             addToFavorites={this.state.favoriteOutfits}
             currentStyleId={this.state.outFitStyleId}
             totalReviews={this.state.totalReviews}
-          />
+          /> */}
           {/* <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
             toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} /> */}
           {/* <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/> */}
-          {/* <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} /> */}
+          <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
       );
     }
