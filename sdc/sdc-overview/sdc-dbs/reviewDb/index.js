@@ -92,7 +92,7 @@
         char.save(char, (err, result) => {
           console.log('saving i=char',  i, '=', char);
           if(err){
-            console.log('err.code = ', err.code);
+            //console.log('err.code = ', err.code);
             if (err.code = '11000'){
               console.log('Duplicate entry, running Update');
               Char.findOneAndUpdate( char, {upsert: true}, ((err, result) => {
@@ -103,7 +103,7 @@
                   callback(err, null);
                 } else { //end of if(err)true
                   console.log('updated entry');
-                  resolve();
+                  resolve(result);
                 } //end of if(err)
               })) //end of findOneAndUpdate
             } else { //end of if 11000

@@ -159,9 +159,8 @@ reviewRouter.get('/meta/:product_id', async (req, res) => {
 reviewRouter.post('/', async (req, res) => {
   //find the id of the last entry in db
   db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
-    //console.log( entry );
     let newReviewId = entry.id + 1;
-    // console.log(newReviewId);
+
     let newObj = {};
     newObj.photos = req.body.photos;
     newObj.id = newReviewId;
@@ -177,12 +176,10 @@ reviewRouter.post('/', async (req, res) => {
     newObj.response = 'null';
     newObj.helpfulness = 0;
 
-   
      //save in reviews table
    helper.saveDataToDb(newObj)
    .then(data => {
-     //console.log('server post line 192', data);
-     //save chars in db
+
      //find chars id in the chars collection
     let productId = req.body.product_id;
     helper.findCharInDb(productId)
@@ -201,21 +198,21 @@ reviewRouter.post('/', async (req, res) => {
      for (var i =0; i < chars.length; i++){
        idChar.push(chars[i].id);
      }
-     console.log('209 arr', idChar);
+     //console.log('209 arr', idChar);
     //create array for reviewchar collection and save every element of this array
     let newCharReview = [];
     //receive last entry id
     db.CharReview.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
-      console.log('last char line 214', entry);
+      //console.log('last char line 214', entry);
       let lastId = entry.id;
       let newCharId = lastId + 1;
-      console.log(newCharId);
+      //console.log(newCharId);
       //change charasteristics
             //req.body.characteristics = "{ '1': 3, '2': 1, '3': 1, '4': 1 }"
 
 
       let arr = [];
-   console.log(req.body.characteristics);
+   //console.log(req.body.characteristics);
   // req.body.characteristics = { '1': 3, '2': 1, '3': 1, '4': 1 }
   req.body.characteristics = JSON.parse(req.body.characteristics.replace(/'/g, '"'));
 
@@ -227,7 +224,7 @@ reviewRouter.post('/', async (req, res) => {
       ];
 
 
-     console.log(charsArray);
+     //console.log(charsArray);
 //[ [ 'Fit', 3 ], [ 'Length', 1 ], [ 'Quality', 1 ], [ 'Comfort', 1 ] ]
 
     //  let chars =  {
@@ -271,7 +268,29 @@ reviewRouter.post('/', async (req, res) => {
      console.log(newArrForChars);
      helper.saveCharsToDb(newArrForChars)
      .then(result => {
-      //  console.log('saved chars', result);
+        console.log('saved chars', result);
+        //save objects in char review collections
+        //get id of last obj in charReview collection
+        db.CharReview.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
+
+      //console.log('276 entry', entry);
+      let newCharReviewId = entry.id + 1;
+      //console.log(newCharReviewId);
+            //console.log('line 273 charsArr', charsArray);
+            let charReviewArr = [];
+            for(var i =0; i < charsArray.length; i++){
+              let newObj = {};
+              newObj.id = newCharReviewId;
+              newObj.characteristic_id = charsArray[i][2];
+              newObj.review_id = newReviewId;
+              newObj.value = charsArray[i][1];
+              newCharReviewId++;
+              charReviewArr.push(newObj);
+
+            }
+            console.log('charReview arr to save', charReviewArr);
+            
+        })
      })
 
 
@@ -280,14 +299,7 @@ reviewRouter.post('/', async (req, res) => {
 
 
 
-      // for (var i =0; i < idCharr.length; i++){
-      //   let obj = {};
-      //   id: 18,
-      //   characteristic_id: 10,
-      //   review_id: 9,
-      //   value: 4
 
-      // }
     })
 
    })
