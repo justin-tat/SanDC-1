@@ -8,9 +8,7 @@ const helper = require('./reviewHelper.js');
 let productIdglobal;
 reviewRouter.get('/:product_id', async (req, res) => {
   let productId = req.url.replace('/','');
-  // productId = 2;
-  // productIdglobal = productId;
- //console.log('server line 14', productIdglobal);
+
 
   helper.findDataInDb(productId)
   .then(reviews => {
@@ -179,7 +177,7 @@ reviewRouter.post('/', async (req, res) => {
     newObj.response = 'null';
     newObj.helpfulness = 0;
 
-    //console.log('newObj', newObj);
+   
      //save in reviews table
    helper.saveDataToDb(newObj)
    .then(data => {

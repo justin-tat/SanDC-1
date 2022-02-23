@@ -95,7 +95,7 @@
             console.log('err.code = ', err.code);
             if (err.code = '11000'){
               console.log('Duplicate entry, running Update');
-              Char.findOneAndUpdate(char.id, char, {upsert: true}, ((err, result) => {
+              Char.findOneAndUpdate( char, {upsert: true}, ((err, result) => {
               // Char.findByIdAndUpdate(char.id, char, ((err, result) => {
                 if (err){
                   console.log('err updating');
@@ -123,8 +123,8 @@
     Promise.all(allpromises)
     .then(result =>{
       console.log('resolved all promises');
-      console.log('db 77 added ', count.addedCount);
-      console.log('db 78 updated', count.updatedCount);
+      // console.log('db 77 added ', count.addedCount);
+      // console.log('db 78 updated', count.updatedCount);
 
      callback(null, result);
     }); //end of then
