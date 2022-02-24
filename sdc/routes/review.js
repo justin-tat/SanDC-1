@@ -289,7 +289,13 @@ reviewRouter.post('/', async (req, res) => {
 
             }
             console.log('charReview arr to save', charReviewArr);
-            
+            helper.saveCharReviewToDb(charReviewArr)
+            .then(result => {
+              console.log('line 294 save char reviews to db', result);
+              //finishing POST route
+              res.sendStatus(201);
+            })
+
         })
      })
 

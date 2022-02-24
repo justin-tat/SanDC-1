@@ -66,6 +66,20 @@ function saveCharsToDb(chars){
   })
 }
 
+function saveCharReviewToDb(chars){
+  return new Promise((resolve, reject)=> {
+    db.saveCharReview(chars, (err, result) => {
+      if(err){
+        console.log(err);
+        reject(err);
+      } else {
+        console.log('helpers - saved char review to db');
+        resolve(result);
+      }
+    })
+  })
+}
+
 
 function findCharInDb(productId){
   return new Promise((resolve, reject)=>{
@@ -98,7 +112,8 @@ module.exports = {
   findCharInDb,
   findReviewCharInDb,
   saveDataToDb,
-  saveCharsToDb
+  saveCharsToDb,
+  saveCharReviewToDb
 }
 
 

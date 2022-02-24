@@ -89,13 +89,13 @@
          product_id: charToSave.product_id,
          name: charToSave.name
         }); //end of Char def
-        char.save(char, (err, result) => {
+        char.save(charToSave, (err, result) => {
           console.log('saving i=char',  i, '=', char);
           if(err){
             //console.log('err.code = ', err.code);
             if (err.code = '11000'){
               console.log('Duplicate entry, running Update');
-              Char.findOneAndUpdate( char, {upsert: true}, ((err, result) => {
+              Char.findOneAndUpdate( charToSave, {upsert: true}, ((err, result) => {
               // Char.findByIdAndUpdate(char.id, char, ((err, result) => {
                 if (err){
                   console.log('err updating');
@@ -131,6 +131,54 @@
   };//end of saveChar
 
 
+  let saveCharReview = (charReviews, callback) => {
+    var allpromises = [];
+    for (var i = 0; i < charReviews.length; i++){
+      let charReviewToSave = charReviews[i];
+      console.log('charReview to save line 138 db', charReviewToSave);
+      let promise = new Promise ((resolve, reject) => {
+        var charReview = new CharReview ({
+          id: charReviewToSave.id,
+          characteristic_id: charReviewToSave.characteristic_id,
+          review_id: charReviewToSave.review_id,
+          value: charReviewToSave.value
+         });
+         charReview.save(charReviewToSave, (err, result) => {
+           if (err){
+             if(err.code === 11000){
+               console.log('duplicate char review to save');
+               charReview.findOneAndUpdate(charReviewToSave, {upsert: true}, (err, result) => {
+                if (err){
+                  console.log('err updating');
+                  reject();
+                  callback(err, null);
+                } else { //end of if(err)true
+                  console.log('updated entry');
+                  resolve(result);
+                } //end of if(err)
+               }
+               )
+             }
+           } else {
+            resolve(result);
+           }
+         })
+
+      })
+      allpromises.push(promise);
+    }
+
+
+    Promise.all(allpromises)
+    .then(result =>{
+      console.log('resolved all promises line 144 in db');
+     callback(null, result);
+    });
+
+
+
+  }
+
 
  module.exports.Review = Review;
  module.exports.ReviewPhoto = ReviewPhoto;
@@ -138,4 +186,5 @@
  module.exports.CharReview = CharReview;
  module.exports.save = save;
  module.exports.saveChar = saveChar;
+  module.exports.saveCharReview = saveCharReview;
 
