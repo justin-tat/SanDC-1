@@ -8,7 +8,6 @@ function findDataInDb(productId){
       if(err){
         reject(err);
       } else {
-        console.log('helper line 11');
         resolve(data);
       }
     })
@@ -39,17 +38,34 @@ function findRatingInDb(productId){
   })
 }
 
-function postReviewInDb(review){
-  return new Promise((resolve, reject)=>{
-    db.save(review).limit().exec((err, data)=>{
+function saveDataToDb(review){
+  return new Promise((resolve, reject)=> {
+    db.save(review, (err, result) => {
       if(err){
+        console.log(err);
         reject(err);
       } else {
-        resolve(data);
+        console.log('helpers line 49');
+        resolve(result);
       }
     })
   })
 }
+
+function saveCharsToDb(chars){
+  return new Promise((resolve, reject)=> {
+    db.saveChar(chars, (err, result) => {
+      if(err){
+        console.log(err);
+        reject(err);
+      } else {
+        console.log('helpers line 63');
+        resolve(result);
+      }
+    })
+  })
+}
+
 
 function findCharInDb(productId){
   return new Promise((resolve, reject)=>{
@@ -80,7 +96,9 @@ module.exports = {
   findPhotoInDb,
   findRatingInDb,
   findCharInDb,
-  findReviewCharInDb
+  findReviewCharInDb,
+  saveDataToDb,
+  saveCharsToDb
 }
 
 
