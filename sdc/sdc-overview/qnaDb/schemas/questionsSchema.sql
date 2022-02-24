@@ -55,3 +55,5 @@ SET dateString = TO_TIMESTAMP(date_written_secs / 1000);
 UPDATE answers
 SET dateString = TO_TIMESTAMP(date_written_secs / 1000);
 
+CREATE INDEX idx_questions_productId ON questions(product_id);
+

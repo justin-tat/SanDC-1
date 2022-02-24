@@ -22,10 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/product', productRouter);
-app.use('/product', relProductsRouter);
+//app.use('/product', relProductsRouter);
 app.use('/ratings', ratingsRouter);
 app.use('/qna', qnaRouter);
 app.use('/cart', cartRouter);
 app.use('/interactions', interactionsRouter);
 
-app.listen(port, () => console.log('Listening on:', port));
+app.listen(port, () => console.log('Listening on port:', port));

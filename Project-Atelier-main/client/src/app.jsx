@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 // import SiteWideMessage from './components/SiteWideMessage/SiteWideMessage.jsx';
 // import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
 // import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
-// import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
-import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
+import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
+//import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
 import axios from 'axios';
 
 import ClickedData from './components/ClickDataAnalytics.jsx';
@@ -55,7 +55,7 @@ class App extends React.Component {
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
       getStyleInfo(productId),
-      //getRelatedProductInfo(productId),
+      getRelatedProductInfo(productId),
       getQuestionsListInfo(productId),
     ]);
 
@@ -144,8 +144,8 @@ class App extends React.Component {
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
             toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} /> */}
-          {/* <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/> */}
-          <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
+          <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
+          {/* <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} /> */}
         </div>
       );
     }
