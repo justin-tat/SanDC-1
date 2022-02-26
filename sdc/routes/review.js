@@ -8,7 +8,7 @@ const helper = require('./reviewHelper.js');
 let productIdglobal;
 reviewRouter.get('/:product_id', async (req, res) => {
   let productId = req.url.replace('/','');
-
+  console.log('GET reviews');
 
   helper.findDataInDb(productId)
   .then(reviews => {

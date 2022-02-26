@@ -6,7 +6,7 @@
 
  var Review  = conn.model('Review', new mongoose.Schema({
   id: {type: Number, unique: true, required: true, index: true  },
-  product_id: {type: Number,  unique: true, required: true  },
+  product_id: {type: Number, required: true, index: true  },
   rating: {type: Number, required: true},
   date: {type: String, required: true},
   summary: {type: String, required: true},

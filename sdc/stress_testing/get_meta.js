@@ -5,6 +5,6 @@ export const options = {
   duration: '30s',
 };
 export default function () {
-  http.get('http://test.k6.io');
+  http.get('http://localhost:3050/fec2/hr-rpp/reviews/meta');
   sleep(1);
 }
