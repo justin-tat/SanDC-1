@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const productRouter = require('./routes/product.js');
-const reviewRouter = require('./routes/review.js');
-
+//const reviewRouter = require('./routes/review.js');
+const qnaRouter = require('./routes/qna.js');
 
 
 app.get('/', (req, res) => {
@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
 
 
 app.use('/fec2/hr-rpp/products/', productRouter);
-app.use('/fec2/hr-rpp/reviews/', reviewRouter);
+//app.use('/fec2/hr-rpp/reviews/', reviewRouter);
+app.use('/fec2/hr-rpp/qna/', qnaRouter);
 
 app.listen(port, () => {
   console.log(`SDC app listening on port ${port}`);
