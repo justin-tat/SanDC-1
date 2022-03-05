@@ -1,7 +1,10 @@
  const mongoose = require('mongoose');
 
- var conn = mongoose.createConnection('mongodb://localhost/reviews');
- var conn2 = mongoose.createConnection('mongodb://localhost/reviewPhotos');
+ var conn = mongoose.createConnection('mongodb://ip-172-31-18-131.ec2.internal/reviews');
+ var conn2 = mongoose.createConnection('mongodb://ip-172-31-18-131.ec2.internal/reviewPhotos');
+
+//  conn.set('debug', true);
+//  mongoose.set('debug', true);
 
 
  var Review  = conn.model('Review', new mongoose.Schema({
@@ -22,14 +25,14 @@
  }));
 
  var Char = conn.model('Char', new mongoose.Schema({
-  id: {type: Number, unique: true, required: true, index: true},
+  id: {type: Number, required: true, index: true},
   product_id: {type: Number, required: true},
   name: {type: String, required: true}
 
  }), 'chars');
 
  var CharReview = conn.model('CharReview', new mongoose.Schema({
-   id: {type: Number, unique: true, required: true},
+   id: {type: Number, required: true},
    characteristic_id: {type: Number, required: true},
    review_id: {type:Number, required: true, index: true},
    value: {type:Number, required: true}
@@ -37,7 +40,7 @@
 
  var ReviewPhoto  = conn2.model('ReviewPhoto', new mongoose.Schema({
 
-  id: {type: Number, unique:true, required: true, index: true},
+  id: {type: Number, required: true, index: true},
   review_id: {type: Number, required: true, index: true},
   url: {type: String, required: true}
  }), 'reviewPhotos');
@@ -131,9 +134,13 @@
   };//end of saveChar
 
 
+
   let saveCharReview = (charReviews, callback) => {
+
     var allpromises = [];
+
     for (var i = 0; i < charReviews.length; i++){
+
       let charReviewToSave = charReviews[i];
       console.log('charReview to save line 138 db', charReviewToSave);
       let promise = new Promise ((resolve, reject) => {
