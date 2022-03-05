@@ -1,6 +1,11 @@
-const express = require('express');
+// const express = require('express');
 
 const reviewRouter = require('express').Router();
+const express = require('express');
+const app = express();
+const port = 3051;
+
+
 const bodyParser = require('body-parser');
 const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
 const helper = require('./reviewHelper.js');
@@ -314,5 +319,8 @@ reviewRouter.post('/', async (req, res) => {
 
 })
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
 
 module.exports = reviewRouter;
