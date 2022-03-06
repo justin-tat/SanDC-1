@@ -1,7 +1,7 @@
  const mongoose = require('mongoose');
 
- var conn = mongoose.createConnection('mongodb://ip-172-31-18-131.ec2.internal/reviews');
- var conn2 = mongoose.createConnection('mongodb://ip-172-31-18-131.ec2.internal/reviewPhotos');
+ var conn = mongoose.createConnection('mongodb://ip-172-31-19-49.ec2.internal/reviews');
+ var conn2 = mongoose.createConnection('mongodb://ip-172-31-19-49.ec2.internal/reviewPhotos');
 
 //  conn.set('debug', true);
 //  mongoose.set('debug', true);
