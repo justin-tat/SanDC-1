@@ -1,6 +1,6 @@
  const mongoose = require('mongoose');
  let config = require('./config.js');
-
+ const fs = require('fs');
  let url = 'reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/reviews-2022-03-06-03-44-06';
  let opts = {
   useNewUrlParser: true,
