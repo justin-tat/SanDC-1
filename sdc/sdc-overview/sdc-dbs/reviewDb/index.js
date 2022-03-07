@@ -1,8 +1,18 @@
  const mongoose = require('mongoose');
  let config = require('./config.js');
 
-var conn = mongoose.createConnection(`mongodb://${config.username}:${config.password}@reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`);
-var conn2 = mongoose.createConnection(`mongodb://${config.username}:${config.password}@reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`);
+ let url = 'reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/reviews-2022-03-06-03-44-06';
+ let opts = {
+  useNewUrlParser: true,
+  ssl: true,
+  sslValidate: false,
+  sslCA: fs.readFileSync('./rds-combined-ca-bundle.pem'),
+  replicaSet: "rs0",
+  readPreference: "secondaryPreferred",
+  retryWrites: false };
+
+var conn = mongoose.createConnection(`mongodb://${config.username}:${config.password}@${url}`, opts);
+var conn2 = mongoose.createConnection(`mongodb://${config.username}:${config.password}@${url}`, opts);
 //  conn.set('debug', true);
 //  mongoose.set('debug', true);
 
