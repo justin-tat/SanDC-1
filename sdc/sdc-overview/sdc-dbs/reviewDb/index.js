@@ -1,12 +1,12 @@
  const mongoose = require('mongoose');
+ let config = require('./config.js');
 
- var conn = mongoose.createConnection('mongodb://ip-172-31-18-131.ec2.internal/reviews');
- //ip-172-31-18-131
- var conn2 = mongoose.createConnection('mongodb://ip-172-31-19-49.ec2.internal/reviewPhotos');
-//ip-172-31-19-49
+var conn = mongoose.createConnection(`mongodb://${config.username}:${config.password}@reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`);
+var conn2 = mongoose.createConnection(`mongodb://${config.username}:${config.password}@reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`);
 //  conn.set('debug', true);
 //  mongoose.set('debug', true);
 
+// https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html
 
  var Review  = conn.model('Review', new mongoose.Schema({
   id: {type: Number, unique: true, required: true, index: true  },
