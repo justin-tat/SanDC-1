@@ -11,53 +11,53 @@ const db = require('../sdc-overview/sdc-dbs/reviewDb/index.js');
 const helper = require('./reviewHelper.js');
 
 let productIdglobal;
-reviewRouter.get('/:product_id', async (req, res) => {
-  res.send('bla');
-  // let productId = req.url.replace('/','');
-  // console.log('GET reviews');
+app.get('/:product_id', async (req, res) => {
+  //res.send('bla');
+  let productId = req.url.replace('/','');
+  console.log('GET reviews');
 
-  // helper.findDataInDb(productId)
-  // .then(reviews => {
-  //   let reviewId = [];
-  //     for (var i = 0; i < reviews.length; i++){
-  //       reviewId.push(reviews[i]. id);
-  //     }
+  helper.findDataInDb(productId)
+  .then(reviews => {
+    let reviewId = [];
+      for (var i = 0; i < reviews.length; i++){
+        reviewId.push(reviews[i]. id);
+      }
 
-  //     var promises = [];
-  //       for(var i =0; i < reviewId.length; i++){
-  //         let promise = new Promise ((resolve, reject)=>{
-  //           helper.findPhotoInDb(reviewId[i])
-  //          .then(data=>{
-  //            resolve(data);
-  //           })
-  //          .catch(err => {
-  //            reject(err);
-  //           })
-  //         })
-  //         promises.push(promise);
-  //        }
+      var promises = [];
+        for(var i =0; i < reviewId.length; i++){
+          let promise = new Promise ((resolve, reject)=>{
+            helper.findPhotoInDb(reviewId[i])
+           .then(data=>{
+             resolve(data);
+            })
+           .catch(err => {
+             reject(err);
+            })
+          })
+          promises.push(promise);
+         }
 
-  //      Promise.all(promises)
-  //     .then(photos =>{
-  //       //  console.log('resolved promises');
-  //        photos = photos.flat();
-  //              if (photos.length > 0){
-  //               let id = photos[0].review_id;
-  //                 for(var i =0; i < reviews.length; i++){
-  //                   if(reviews[i].id === id){
-  //                  //attach photos arr to review
-  //                    reviews[i].photos = photos;
-  //                   }
-  //                  }
-  //               }
-  //               //console.log(reviews);
-  //               res.send(reviews);
+       Promise.all(promises)
+      .then(photos =>{
+        //  console.log('resolved promises');
+         photos = photos.flat();
+               if (photos.length > 0){
+                let id = photos[0].review_id;
+                  for(var i =0; i < reviews.length; i++){
+                    if(reviews[i].id === id){
+                   //attach photos arr to review
+                     reviews[i].photos = photos;
+                    }
+                   }
+                }
+                //console.log(reviews);
+                res.send(reviews);
 
-  //      })
-  // })
-  // .catch(err => {
-  //   res.sendStatus(500);
-  // })
+       })
+  })
+  .catch(err => {
+    res.sendStatus(500);
+  })
 
 });
 
