@@ -164,7 +164,7 @@ app.get('/meta/:product_id', async (req, res) => {
 
 });
 
-reviewRouter.post('/', async (req, res) => {
+app.post('/', async (req, res) => {
   //find the id of the last entry in db
   db.Review.findOne({}, {}, { sort: { 'id' : -1 } }, function(err, entry) {
     let newReviewId = entry.id + 1;
