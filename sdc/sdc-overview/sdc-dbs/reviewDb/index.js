@@ -1,12 +1,25 @@
  const mongoose = require('mongoose');
+ let config = require('./config.js');
+ let url = 'reviews-2022-03-06-03-44-06.cluster-cxqpgxmvikxg.us-east-1.docdb.amazonaws.com:27017/reviews-2022-03-06-03-44-06';
+ let opts = {
+  useNewUrlParser: true,
+  ssl: true,
+  sslValidate: false,
+  sslCA: './rds-combined-ca-bundle.pem',
+  replicaSet: "rs0",
+  readPreference: "secondaryPreferred",
+  retryWrites: false };
 
- var conn = mongoose.createConnection('mongodb://localhost/reviews');
- var conn2 = mongoose.createConnection('mongodb://localhost/reviewPhotos');
+var conn = mongoose.createConnection(`mongodb://${config.username}:${config.password}@${url}`, opts);
+var conn2 = mongoose.createConnection(`mongodb://${config.username}:${config.password}@${url}`, opts);
+//  conn.set('debug', true);
+//  mongoose.set('debug', true);
 
+// https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html
 
  var Review  = conn.model('Review', new mongoose.Schema({
   id: {type: Number, unique: true, required: true, index: true  },
-  product_id: {type: Number,  unique: true, required: true  },
+  product_id: {type: Number, required: true, index: true  },
   rating: {type: Number, required: true},
   date: {type: String, required: true},
   summary: {type: String, required: true},
@@ -22,14 +35,14 @@
  }));
 
  var Char = conn.model('Char', new mongoose.Schema({
-  id: {type: Number, unique: true, required: true, index: true},
+  id: {type: Number, required: true, index: true},
   product_id: {type: Number, required: true},
   name: {type: String, required: true}
 
  }), 'chars');
 
  var CharReview = conn.model('CharReview', new mongoose.Schema({
-   id: {type: Number, unique: true, required: true},
+   id: {type: Number, required: true},
    characteristic_id: {type: Number, required: true},
    review_id: {type:Number, required: true, index: true},
    value: {type:Number, required: true}
@@ -37,7 +50,7 @@
 
  var ReviewPhoto  = conn2.model('ReviewPhoto', new mongoose.Schema({
 
-  id: {type: Number, unique:true, required: true, index: true},
+  id: {type: Number, required: true, index: true},
   review_id: {type: Number, required: true, index: true},
   url: {type: String, required: true}
  }), 'reviewPhotos');
@@ -89,13 +102,13 @@
          product_id: charToSave.product_id,
          name: charToSave.name
         }); //end of Char def
-        char.save(char, (err, result) => {
+        char.save(charToSave, (err, result) => {
           console.log('saving i=char',  i, '=', char);
           if(err){
-            console.log('err.code = ', err.code);
+            //console.log('err.code = ', err.code);
             if (err.code = '11000'){
               console.log('Duplicate entry, running Update');
-              Char.findOneAndUpdate(char.id, char, {upsert: true}, ((err, result) => {
+              Char.findOneAndUpdate( charToSave, {upsert: true}, ((err, result) => {
               // Char.findByIdAndUpdate(char.id, char, ((err, result) => {
                 if (err){
                   console.log('err updating');
@@ -103,7 +116,7 @@
                   callback(err, null);
                 } else { //end of if(err)true
                   console.log('updated entry');
-                  resolve();
+                  resolve(result);
                 } //end of if(err)
               })) //end of findOneAndUpdate
             } else { //end of if 11000
@@ -123,13 +136,65 @@
     Promise.all(allpromises)
     .then(result =>{
       console.log('resolved all promises');
-      console.log('db 77 added ', count.addedCount);
-      console.log('db 78 updated', count.updatedCount);
+      // console.log('db 77 added ', count.addedCount);
+      // console.log('db 78 updated', count.updatedCount);
 
      callback(null, result);
     }); //end of then
   };//end of saveChar
 
+
+
+  let saveCharReview = (charReviews, callback) => {
+
+    var allpromises = [];
+
+    for (var i = 0; i < charReviews.length; i++){
+
+      let charReviewToSave = charReviews[i];
+      console.log('charReview to save line 138 db', charReviewToSave);
+      let promise = new Promise ((resolve, reject) => {
+        var charReview = new CharReview ({
+          id: charReviewToSave.id,
+          characteristic_id: charReviewToSave.characteristic_id,
+          review_id: charReviewToSave.review_id,
+          value: charReviewToSave.value
+         });
+         charReview.save(charReviewToSave, (err, result) => {
+           if (err){
+             if(err.code === 11000){
+               console.log('duplicate char review to save');
+               charReview.findOneAndUpdate(charReviewToSave, {upsert: true}, (err, result) => {
+                if (err){
+                  console.log('err updating');
+                  reject();
+                  callback(err, null);
+                } else { //end of if(err)true
+                  console.log('updated entry');
+                  resolve(result);
+                } //end of if(err)
+               }
+               )
+             }
+           } else {
+            resolve(result);
+           }
+         })
+
+      })
+      allpromises.push(promise);
+    }
+
+
+    Promise.all(allpromises)
+    .then(result =>{
+      console.log('resolved all promises line 144 in db');
+     callback(null, result);
+    });
+
+
+
+  }
 
 
  module.exports.Review = Review;
@@ -138,4 +203,5 @@
  module.exports.CharReview = CharReview;
  module.exports.save = save;
  module.exports.saveChar = saveChar;
+  module.exports.saveCharReview = saveCharReview;
 
