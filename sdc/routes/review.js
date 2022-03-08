@@ -18,6 +18,7 @@ app.get('/:product_id', async (req, res) => {
 
   helper.findDataInDb(productId)
   .then(reviews => {
+    console.log('got reviews line 21', reviews);
     let reviewId = [];
       for (var i = 0; i < reviews.length; i++){
         reviewId.push(reviews[i]. id);
@@ -28,6 +29,7 @@ app.get('/:product_id', async (req, res) => {
           let promise = new Promise ((resolve, reject)=>{
             helper.findPhotoInDb(reviewId[i])
            .then(data=>{
+             console.log('got data line 32', data);
              resolve(data);
             })
            .catch(err => {
@@ -61,7 +63,7 @@ app.get('/:product_id', async (req, res) => {
 
 });
 
-reviewRouter.get('/meta/:product_id', async (req, res) => {
+app.get('/meta/:product_id', async (req, res) => {
   //req.url = meta/product_id=56546546
   req.url = req.url.slice(req.url.search(/\d+$/));
   console.log('req.url 64', req.url);
