@@ -44,17 +44,3 @@ CREATE TABLE photos (
         FOREIGN KEY(answer_id)
             REFERENCES answers(id)
 );
-
-
-
-ALTER TABLE questions 
-ADD COLUMN dateString VARCHAR;
-
-ALTER TABLE answers
-ADD COLUMN dateString VARCHAR;
-
-UPDATE questions
-SET dateString = TO_TIMESTAMP(date_written_secs / 1000);
-
-UPDATE answers
-SET dateString = TO_TIMESTAMP(date_written_secs / 1000);
