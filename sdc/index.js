@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3050;
 const bodyParser = require('body-parser')
+const path = require('path');
 
 
 // parse application/x-www-form-urlencoded
@@ -23,6 +24,10 @@ app.get('/', (req, res) => {
 app.use('/fec2/hr-rpp/products/', productRouter);
 //app.use('/fec2/hr-rpp/reviews/', reviewRouter);
 app.use('/fec2/hr-rpp/qna/', qnaRouter);
+
+app.get('/loaderio-c5151344c9608b7b6fc275d0f386f4b4.txt', (req, res) => {
+  res.sendFile(path.join(_dirname, '/sdc-overview/qnaDb/qnaTests/loaderIOAuth.txt'));
+});
 
 app.listen(port, () => {
   console.log(`SDC app listening on port ${port}`);
