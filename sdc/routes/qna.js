@@ -15,8 +15,9 @@ qnaRouter.get('/', async (req, res) => {
 });
 
 //Done
-qnaRouter.get('/questions/:product_id', async (req, res) => {
-    var stringId = req.params.product_id.split("product_id=")[1]
+qnaRouter.get('/questions', async (req, res) => {
+    var stringId = req.query.product_id.split("product_id=")[1]
+    
     var id = parseInt(stringId);
     db.db.query(`SELECT * FROM questions WHERE product_id = $1`, [id])
     .then(questions => {
