@@ -26,7 +26,7 @@ app.use('/fec2/hr-rpp/products/', productRouter);
 app.use('/fec2/hr-rpp/qna/', qnaRouter);
 
 app.get('/loaderio-c5151344c9608b7b6fc275d0f386f4b4.txt', (req, res) => {
-  res.sendFile(path.join(_dirname, '/sdc-overview/qnaDb/qnaTests/loaderIOAuth.txt'));
+  res.sendFile(path.join(__dirname, '/sdc-overview/qnaDb/qnaTests/loaderIOAuth.txt'));
 });
 
 app.listen(port, () => {
