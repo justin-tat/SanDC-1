@@ -10,8 +10,8 @@ const pool = new Pool({
 });
 */
 
-
-const connectionString = 'postgres://postgres:Uncompromised@ec2-3-87-59-162.compute-1.amazonaws.com:5432/questionsandanswers';
+//connectionString = 'dbType://username:password@address:port/database'
+const connectionString = 'postgres://postgres:Uncompromised@ec2-52-203-92-198.compute-1.amazonaws.com:5432/questionsandanswers';
 const db = new Client({connectionString: connectionString});
 db.connect(err => {
     if (err) {
