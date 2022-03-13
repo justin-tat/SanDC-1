@@ -1,1 +1,1 @@
-ssh -i "/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem" ubuntu@ec2-3-83-150-135.compute-1.amazonaws.com
+ssh -i "/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem" ubuntu@ec2-52-91-86-111.compute-1.amazonaws.com
