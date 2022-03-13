@@ -25,7 +25,9 @@ app.use('/fec2/hr-rpp/products/', productRouter);
 //app.use('/fec2/hr-rpp/reviews/', reviewRouter);
 app.use('/fec2/hr-rpp/qna/', qnaRouter);
 
-app.get('/loaderio-c5151344c9608b7b6fc275d0f386f4b4.txt', (req, res) => {
+var loaderIOString = "loaderio-f6a63a50506a0a0bee9d16aa3c706df9.txt"
+
+app.get('/' + loaderIOString, (req, res) => {
   res.sendFile(path.join(__dirname, '/sdc-overview/qnaDb/qnaTests/loaderIOAuth.txt'));
 });
 
