@@ -15,10 +15,12 @@ qnaRouter.get('/', async (req, res) => {
 });
 
 //Done
-qnaRouter.get('/questions', async (req, res) => {
-    var stringId = req.query.product_id.split("product_id=")[1]
-    
+//originalUrl: '/qna/getQuestionsList?id=64621',
+qnaRouter.get('/getQuestionsList', async (req, res) => {
+    var stringId = req.query.id;
     var id = parseInt(stringId);
+    console.log("SDC getQuestionList test");
+    //console.log(req);
     db.db.query(`SELECT * FROM questions WHERE product_id = $1`, [id])
     .then(questions => {
         var returnedObject = {product_id: stringId, results: []};
@@ -74,7 +76,6 @@ qnaRouter.get('/questions', async (req, res) => {
         photos.push(retObj);
         return Promise.all(photos);
     })
-    
     .then(photos => {
         var retObj = photos.pop();
         var relevantPhotos = [];
@@ -109,142 +110,89 @@ qnaRouter.get('/questions', async (req, res) => {
         res.status(400).send(err);
     })
 });
-//Done
-qnaRouter.put('/questions/:id/helpful', async (req, res) => {
-    var id = req.params.id;
+
+//Done after FE refactoring
+qnaRouter.put('/updateQuestionHelp', async (req, res) => {
+    var id = req.body.params.questionId;
+    //console.log(req);
+    console.log('questionId', req.body.params.questionId);
+    console.log('productId', req.body.params.productId);
     db.db.query(`UPDATE questions SET helpful = helpful + 1 WHERE id = $1`, [id], (err) => {
         if (err) {
             console.log('Errored while trying to update answers helpful', err);
             res.status(400).send(err);
         }
-        res.send('Successfully updated question helpfulness of ' + req.params.id);
+        console.log('Successfully updated question helpfulness of ' + req.body.params.questionId)
+        //res.send('Successfully updated question helpfulness of ' + req.params.id);
+        res.redirect(303, `getQuestionsList?id=${req.body.params.productId}`);
+        //next();
     });
 });
-
-//Done
-qnaRouter.put('/answers/:id/helpful', async (req, res) => {
+//Done after FE refactoring
+qnaRouter.put('/updateAnswerHelp', async (req, res) => {
     var id = req.params.id;
+    id = req.body.params.answerId;
+
     db.db.query('UPDATE answers SET helpful = helpful + 1 WHERE id = $1', [id], (err) => {
         if (err) {
             console.log('Errored while trying to update answers helpful', err);
             res.status(400).send(err);
         }
-        res.send('Successfully updated answer helpfulness of ' + id);
+        res.redirect(303, `getQuestionsList?id=${req.body.params.productId}`);
     });
 });
 
-//Done
-qnaRouter.put('/answers/:id/report', async (req, res) => {
+//Done after FE Refactor
+qnaRouter.put('/reportAnswer', async (req, res) => {
     var id = req.params.id;
+    id = req.body.params.productId;
     db.db.query('UPDATE answers SET reported = reported + 1 WHERE id = $1', [id], (err, result) => {
         if (err) {
             console.log('Errored while trying to update answers reportedness', err);
             res.status(400).send(err);
         }
-        res.send('Successfully updated answer reportedness of ' + id);
+        //Status must be 303 to allow redirect to get request
+        res.redirect(303, `getQuestionsList?id=${req.body.params.productId}`);
     });
 });
 
-qnaRouter.post('/questions', async (req, res) => {
-    var productID = req.body.product_id;
-    var body = req.body.body;
-    var askName = req.body.name;
-    var askEmail = req.body.email;
+//Done after FE Refactor
+qnaRouter.post('/addNewQuestion', async (req, res) => {
+    var productID = req.body.params.id;
+    var body = req.body.params.body;
+    var askName = req.body.params.name;
+    var askEmail = req.body.params.email;
     var timestamp = Date.now();
-    // console.log(productID);
-    // Before autoincrement refactor
-    // db.db.query(`SELECT max(id) FROM questions`)
-    // .then(max => {
-    //     var qId = parseInt(max.rows[0].max);
-    //     return qId;
-    // })
-    // .then(qId => {
-    //     return db.db.query(`INSERT INTO questions ( product_id, body, date_written_secs, asker_name, asker_email) VALUES ($1, $2, $3, $4, $5) RETURNING id, date_written_secs`, [ productID, body, timestamp, askName, askEmail ])
-    // })
-    
-    // .then(result => {
-    //     var id = parseInt(result.rows[0].id);
-    //     var time = parseInt(result.rows[0].date_written_secs);
-    //     return db.db.query(`UPDATE questions SET dateString = TO_TIMESTAMP(${time} / 1000) WHERE id = ${id}`);
-    // })
-    // .then((result) => {
-    //     res.send('Successfully added question: ' + result.rows[0].id);
-    // })
-    // .catch(err => {
-    //     console.log('Errored while trying to add question', err);
-    //     res.status(400).send(err);
-    // })
-
-        //After Autoincrement Refactor
-        db.db.query(`INSERT INTO questions ( product_id, body, date_written_secs, asker_name, asker_email) VALUES ($1, $2, $3, $4, $5) RETURNING id, date_written_secs`, [ productID, body, timestamp, askName, askEmail ])
-        .then((result) => {
-            res.send('Successfully added question: ' + result.rows[0].id);
-        })
-        .catch(err => {
-            console.log('Errored while trying to add question', err);
-            res.status(400).send(err);
-        })
+    db.db.query(`INSERT INTO questions ( product_id, body, date_written_secs, asker_name, asker_email) VALUES ($1, $2, $3, $4, $5) RETURNING id, date_written_secs`, [ productID, body, timestamp, askName, askEmail ])
+    .then((result) => {
+        //res.send('Successfully added question: ' + result.rows[0].id);
+        console.log('Successfully added question');
+        res.redirect(303, `getQuestionsList?id=${req.body.params.id}`);
+    })
+    .catch(err => {
+        console.log('Errored while trying to add question', err);
+        res.status(400).send(err);
+    });
 
 });
 
 //Done
-qnaRouter.post('/questions/:questionId/answers', async (req, res) => {
-    var questionID = parseInt(req.params.questionId);
-    var body = req.body.body;
-    var ansName = req.body.name;
-    var ansEmail = req.body.email;
-    var photos = req.body.photos;
+qnaRouter.post('/addNewAnswer', async (req, res) => {
+    var questionID = req.body.params.id;
+    var body = req.body.params.body;
+    var ansName = req.body.params.name;
+    var ansEmail = req.body.params.email;
+    var photos = req.body.params.photos;
     var timestamp = Date.now();
     var aId = -1;
-    //Before auto-increment Refactor of answers.id and photos.id
-    // db.db.query(`SELECT max(id) FROM answers`, (err, result) => {
-    //     if (err) {
-    //         console.log(err);
-    //         res.status(400).send(err);
-    //     }
-    //     var id = parseInt(result.rows[0].max);
-    //     db.db.query(`INSERT INTO answers (id, question_id, body, date_written_secs, answerer_name, answerer_email) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, date_written_secs`, [id + 1, questionID, body, timestamp, ansName, ansEmail], (err, result) => {
-    //         if (err) {
-    //             console.log('Errored while trying to post new question', err);
-    //             res.status(400).send(err);
-    //         }
-    //         var id = parseInt(result.rows[0].id);
-    //         var time = parseInt(result.rows[0].date_written_secs);
-    //         db.db.query(`UPDATE answers SET dateString = TO_TIMESTAMP(${time} / 1000) WHERE id = ${id}`, (err, result) => {
-    //             if (err) {
-    //                 console.log('Errored while trying to update time of ' + id, err);
-    //                 res.status(400).send(err);
-    //             }
-    //             db.db.query('SELECT max(id) FROM photos', (err, result) => {
-    //                 if (err) {
-    //                     console.log(err);
-    //                     res.status(400).send(err);
-    //                 }
-    //                 var photosId = parseInt(result.rows[0].max);
-    //                 db.db.query(`INSERT INTO photos (id, answer_id, url) VALUES ($1, $2, $3)`, [photosId + 1, id, photos], (err, result) => {
-    //                     if (err) {
-    //                         console.log('Errored while trying to insert photos', err);
-    //                         res.status(400).send(err);
-    //                     }
-    //                     res.send('Successfully posted answer after updating photos');
-    //                 } )
-    //             })
-    //         })
-    //     });
-    // })
-
-        //After autoIncrement Refactor of answers.id and photos.id
-        db.db.query(`INSERT INTO answers (question_id, body, date_written_secs, answerer_name, answerer_email) VALUES ($1, $2, $3, $4, $5) RETURNING id, date_written_secs`, [questionID, body, timestamp, ansName, ansEmail])
+        return db.db.query(`INSERT INTO answers (question_id, body, date_written_secs, answerer_name, answerer_email) VALUES ($1, $2, $3, $4, $5) RETURNING id, date_written_secs`, [questionID, body, timestamp, ansName, ansEmail])
         .then((result) => {
             aId = parseInt(result.rows[0].id);
-            var time = parseInt(result.rows[0].date_written_secs);
-            return db.db.query(`UPDATE answers SET dateString = TO_TIMESTAMP(${time} / 1000) WHERE id = ${aId}`)
-        })
-        .then(() => {
             return db.db.query(`INSERT INTO photos (answer_id, url) VALUES ($1, $2)`, [aId, photos]);
         })
         .then(() => {
-            res.send('Successfully posted answer after updating photos');
+            //res.send('Successfully posted answer after updating photos');
+            res.redirect(303, `getQuestionsList?id=${req.body.params.productId}`);
         })
         .catch(err => {
             console.log('Errored while trying to add answer', err);
