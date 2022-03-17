@@ -17,6 +17,7 @@ qnaRouter.get('/', async (req, res) => {
 //Done
 //originalUrl: '/qna/getQuestionsList?id=64621',
 qnaRouter.get('/getQuestionsList', async (req, res) => {
+    console.log("Found the path");
     var stringId = req.query.id;
     var id = parseInt(stringId);
     console.log("SDC getQuestionList test");
