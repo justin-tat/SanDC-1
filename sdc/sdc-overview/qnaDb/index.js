@@ -11,7 +11,7 @@ const pool = new Pool({
 */
 
 //connectionString = 'dbType://username:password@address:port/database'
-var ip = 'ec2-52-205-253-24.compute-1.amazonaws.com';
+var ip = 'ec2-52-23-196-247.compute-1.amazonaws.com';
 const connectionString = `postgres://postgres:Uncompromised@${ip}:5432/questionsandanswers`;
 const db = new Client({connectionString: connectionString});
 db.connect(err => {
