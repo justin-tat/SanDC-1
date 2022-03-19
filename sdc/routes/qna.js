@@ -36,6 +36,7 @@ function cache(req, res, next) {
             console.log("Messed up in cache middleware function");
             throw err;
         }
+        console.log("data: " + data);
         if (data !== null) {
             console.log("Data found");
             res.send(data);
