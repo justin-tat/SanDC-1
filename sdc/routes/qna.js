@@ -12,15 +12,15 @@ qnaRouter.use(express.json());
 qnaRouter.use(bodyParser.urlencoded({ extended: false }));
 qnaRouter.use(bodyParser.json());
 
-// (async () => {
-//     client.on('error', (err) => console.log('Redis Client Error', err));
-//     await client.connect();
-//   })();
+(async () => {
+    client.on('error', (err) => console.log('Redis Client Error', err));
+    await client.connect();
+  })();
 
-// qnaRouter.get('/', async (req, res) => {
-//     console.log('qna initial get');
-//     res.sendStatus(200);
-// });
+qnaRouter.get('/', async (req, res) => {
+    console.log('qna initial get');
+    res.sendStatus(200);
+});
 
 //Cache middleware
 function cache(req, res, next) {
