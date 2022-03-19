@@ -41,23 +41,6 @@ qnaRouter.get('/', async (req, res) => {
     res.sendStatus(200);
 });
 
-//Cache middleware
-function cache(req, res, next) {
-    var id = req.query.id;
-    client.get(id, (err, data) => {
-        if (err) {
-            console.log("Messed up in cache middleware function");
-            throw err;
-        }
-        if (data !== null) {
-            console.log("Data found");
-            res.send(data);
-        } else {
-            console.log("Data not found");
-            return next();
-        }
-    });
-}
 //Done
 qnaRouter.get('/getQuestionsList', cache, (req, res) => {
     var stringId = req.query.id;
