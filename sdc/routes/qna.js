@@ -3,20 +3,38 @@ const express = require('express');
 const qnaRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const db = require('../sdc-overview/qnaDb/index');
+const redis = require('redis');
+
+const REDIS_PORT = 6379;
+const client = redis.createClient(REDIS_PORT);
 
 qnaRouter.use(express.json());
 qnaRouter.use(bodyParser.urlencoded({ extended: false }));
 qnaRouter.use(bodyParser.json());
-
 
 qnaRouter.get('/', async (req, res) => {
     console.log('qna initial get');
     res.sendStatus(200);
 });
 
+//Cache middleware
+function cache(req, res, next) {
+    var id = parseInt(req.query.id);
+    client.get(id, (err, data) => {
+        if (err) {
+            console.log("Messed up in cache middleware function");
+            throw err;
+        }
+        if (data !== null) {
+            res.send(data);
+        } else {
+            next();
+        }
+    });
+}
+
 //Done
-//originalUrl: '/qna/getQuestionsList?id=64621',
-qnaRouter.get('/getQuestionsList', async (req, res) => {
+qnaRouter.get('/getQuestionsList', cache, async (req, res) => {
     var stringId = req.query.id;
     var id = parseInt(stringId);
     //console.log(req);
@@ -102,6 +120,10 @@ qnaRouter.get('/getQuestionsList', async (req, res) => {
                 retObj.results[a].answers[key].photos = photosUrls;
             }
         }
+        //Redis Caching
+        //client.setex(key, expiration secs, value);
+        //Currently storing numerical ID with retObj for 2 hours in redis cache
+        client.setex(parseInt(stringId), 7200, retObj);
         res.send(retObj);
     })
     .catch(err => {

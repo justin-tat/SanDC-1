@@ -7,9 +7,9 @@
     "start": "nodemon index.js",
     "start:nodemon": "nodemon index.js",
     "test": "node ./node_modules/mocha/bin/mocha",
-    "load": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-52-87-238-119.compute-1.amazonaws.com",
-    "login": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-18-205-17-238.compute-1.amazonaws.com",
-    "db": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-52-23-196-247.compute-1.amazonaws.com"
+    "load": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-3-84-77-94.compute-1.amazonaws.com",
+    "login": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-35-175-220-212.compute-1.amazonaws.com",
+    "db": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-54-166-182-206.compute-1.amazonaws.com"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "fast-csv": "^4.3.6",
     "moment": "^2.29.1",
     "mongoose": "^6.2.2",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "redis": "^4.0.4"
   }
 }
