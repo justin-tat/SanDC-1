@@ -161,8 +161,7 @@ qnaRouter.put('/updateQuestionHelp', async (req, res) => {
 });
 //Done after FE refactoring
 qnaRouter.put('/updateAnswerHelp', async (req, res) => {
-    var id = req.params.id;
-    id = req.body.params.answerId;
+    var id = req.body.params.answerId;
 
     db.db.query('UPDATE answers SET helpful = helpful + 1 WHERE id = $1', [id], (err) => {
         if (err) {
