@@ -31,21 +31,6 @@ qnaRouter.get('/', async (req, res) => {
 function cache(req, res, next) {
     var id = JSON.stringify(req.query.id);
     console.log("Inside of middleware");
-    //this function seems to take forever. Maybe it isn't working? Check docs.
-    // client.get(id, (err, data) => {
-    //     if (err) {
-    //         console.log("Messed up in cache middleware function");
-    //         throw err;
-    //     }
-    //     console.log("data: " + data);
-    //     if (data !== null) {
-    //         console.log("Data found");
-    //         res.send(data);
-    //     } else {
-    //         console.log("Data not found");
-    //         next();
-    //     }
-    // })
     client.get(id)
     .then(data => {
         if (data === null) {
@@ -53,7 +38,7 @@ function cache(req, res, next) {
             next();
         } else {
             console.log("data found");
-            res.send(data);
+            res.send(JSON.parse(data));
         }
     })
     .catch(err => {
