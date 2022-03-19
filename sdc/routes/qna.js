@@ -31,20 +31,35 @@ qnaRouter.get('/', async (req, res) => {
 function cache(req, res, next) {
     var id = JSON.stringify(req.query.id);
     console.log("Inside of middleware");
-    client.get(id, (err, data) => {
-        if (err) {
-            console.log("Messed up in cache middleware function");
-            throw err;
-        }
-        console.log("data: " + data);
-        if (data !== null) {
-            console.log("Data found");
-            res.send(data);
-        } else {
-            console.log("Data not found");
+    //this function seems to take forever. Maybe it isn't working? Check docs.
+    // client.get(id, (err, data) => {
+    //     if (err) {
+    //         console.log("Messed up in cache middleware function");
+    //         throw err;
+    //     }
+    //     console.log("data: " + data);
+    //     if (data !== null) {
+    //         console.log("Data found");
+    //         res.send(data);
+    //     } else {
+    //         console.log("Data not found");
+    //         next();
+    //     }
+    // })
+    client.get(id)
+    .then(data => {
+        if (data === null) {
+            console.log("data not found");
             next();
+        } else {
+            console.log("data found");
+            res.send(data);
         }
-    });
+    })
+    .catch(err => {
+        console.log("Messed up in cache middleware function");
+        res.sendStatus(500);
+    })
 }
 
 //Done
@@ -137,7 +152,7 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
         //Redis Caching
         //client.setex(key, expiration secs, value);
         //Currently storing numerical ID with retObj for 2 hours in redis cache
-        client.setex(JSON.stringify(stringId), 7200, JSON.stringify(retObj));
+        client.set(JSON.stringify(stringId), JSON.stringify(retObj));
         res.send(retObj);
     })
     .catch(err => {
