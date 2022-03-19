@@ -4,6 +4,7 @@ const qnaRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const db = require('../sdc-overview/qnaDb/index');
 const redis = require('redis');
+const app = require('..');
 
 const REDIS_PORT = 6379;
 const client = redis.createClient(REDIS_PORT);
@@ -40,8 +41,9 @@ function cache(req, res, next) {
     });
 }
 
+qnaRouter.use(cache);
 //Done
-qnaRouter.get('/getQuestionsList/:id', cache, async (req, res) => {
+qnaRouter.get('/getQuestionsList', cache, async (req, res) => {
     var stringId = req.query.id;
     var id = parseInt(stringId);
     console.log("Correct path");
