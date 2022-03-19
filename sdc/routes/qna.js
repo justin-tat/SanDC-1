@@ -43,7 +43,7 @@ function cache(req, res, next) {
 
 qnaRouter.use(cache);
 //Done
-qnaRouter.get('/getQuestionsList', cache, async (req, res) => {
+qnaRouter.get('/getQuestionsList', async (req, res) => {
     var stringId = req.query.id;
     var id = parseInt(stringId);
     console.log("Correct path");
