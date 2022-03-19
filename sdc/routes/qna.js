@@ -20,7 +20,7 @@ qnaRouter.use(bodyParser.json());
 
 //Cache middleware
 function cache(req, res, next) {
-    var id = parseInt(req.query.id);
+    var id = JSON.stringify(req.query.id);
     console.log("Inside of middleware");
     client.get(id, (err, data) => {
         if (err) {
@@ -131,7 +131,7 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
         //Redis Caching
         //client.setex(key, expiration secs, value);
         //Currently storing numerical ID with retObj for 2 hours in redis cache
-        client.setex(parseInt(stringId), 7200, JSON.stringify(retObj));
+        client.setex(JSON.stringify(stringId), 7200, JSON.stringify(retObj));
         res.send(retObj);
     })
     .catch(err => {
