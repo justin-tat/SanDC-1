@@ -16,13 +16,22 @@ qnaRouter.use(bodyParser.json());
 (async () => {
     client.on('error', (err) => console.log('Redis Client Error', err));
     await client.connect();
+    client.on('connect', () => {
+        console.log("Redis client connected!");
+    })
   })();
 
+
+qnaRouter.get('/', async (req, res) => {
+    console.log('qna initial get');
+    res.sendStatus(200);
+});
+
 //Cache middleware
-async function cache(req, res, next) {
+function cache(req, res, next) {
     var id = JSON.stringify(req.query.id);
     console.log("Inside of middleware");
-    await client.get(id, (err, data) => {
+    client.get(id, (err, data) => {
         if (err) {
             console.log("Messed up in cache middleware function");
             throw err;
@@ -32,14 +41,10 @@ async function cache(req, res, next) {
             res.send(data);
         } else {
             console.log("Data not found");
-            return next();
+            next();
         }
     });
 }
-qnaRouter.get('/', async (req, res) => {
-    console.log('qna initial get');
-    res.sendStatus(200);
-});
 
 //Done
 qnaRouter.get('/getQuestionsList', cache, (req, res) => {
