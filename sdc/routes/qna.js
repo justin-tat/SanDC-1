@@ -14,7 +14,6 @@ qnaRouter.use(bodyParser.json());
 
 (async () => {
     client.on('error', (err) => console.log('Redis Client Error', err));
-  
     await client.connect();
   })();
 
@@ -43,7 +42,7 @@ function cache(req, res, next) {
 qnaRouter.get('/getQuestionsList', cache, async (req, res) => {
     var stringId = req.query.id;
     var id = parseInt(stringId);
-    //console.log(req);
+    console.log("Correct path");
     db.db.query(`SELECT * FROM questions WHERE product_id = $1`, [id])
     .then(questions => {
         var returnedObject = {product_id: stringId, results: []};
