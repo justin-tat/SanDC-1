@@ -27,17 +27,14 @@ qnaRouter.get('/', async (req, res) => {
     res.sendStatus(200);
 });
 
-//Cache middleware
+//Cache middleware (works after refactoring over to promise based instead of async await)
 function cache(req, res, next) {
     var id = JSON.stringify(req.query.id);
-    console.log("Inside of middleware");
     client.get(id)
     .then(data => {
         if (data === null) {
-            console.log("data not found");
             next();
         } else {
-            console.log("data found");
             res.send(JSON.parse(data));
         }
     })
@@ -51,7 +48,6 @@ function cache(req, res, next) {
 qnaRouter.get('/getQuestionsList', cache, (req, res) => {
     var stringId = req.query.id;
     var id = parseInt(stringId);
-    console.log("Correct path");
     db.db.query(`SELECT * FROM questions WHERE product_id = $1`, [id])
     .then(questions => {
         var returnedObject = {product_id: stringId, results: []};
