@@ -31,8 +31,10 @@ function cache(req, res, next) {
             throw err;
         }
         if (data !== null) {
+            console.log("Data found");
             res.send(data);
         } else {
+            console.log("Data not found");
             next();
         }
     });
