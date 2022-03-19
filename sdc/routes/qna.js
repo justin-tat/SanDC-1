@@ -18,6 +18,23 @@ qnaRouter.use(bodyParser.json());
     await client.connect();
   })();
 
+//Cache middleware
+function cache(req, res, next) {
+    var id = parseInt(req.query.id);
+    client.get(id, (err, data) => {
+        if (err) {
+            console.log("Messed up in cache middleware function");
+            throw err;
+        }
+        if (data !== null) {
+            console.log("Data found");
+            res.send(data);
+        } else {
+            console.log("Data not found");
+            return next();
+        }
+    });
+}
 qnaRouter.get('/', async (req, res) => {
     console.log('qna initial get');
     res.sendStatus(200);
@@ -130,7 +147,7 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
         //Redis Caching
         //client.setex(key, expiration secs, value);
         //Currently storing numerical ID with retObj for 2 hours in redis cache
-        client.setex(parseInt(stringId), 7200, retObj);
+        client.setex(parseInt(stringId), 7200, JSON.stringify(retObj));
         res.send(retObj);
     })
     .catch(err => {
