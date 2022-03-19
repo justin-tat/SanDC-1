@@ -36,7 +36,7 @@ function cache(req, res, next) {
             res.send(data);
         } else {
             console.log("Data not found");
-            next();
+            return next();
         }
     });
 }
