@@ -8,7 +8,7 @@
     "start:nodemon": "nodemon index.js",
     "test": "node ./node_modules/mocha/bin/mocha",
     "load": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-18-205-160-192.compute-1.amazonaws.com",
-    "login": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-44-203-163-200.compute-1.amazonaws.com",
+    "login": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-18-212-212-233.compute-1.amazonaws.com",
     "db": "ssh -i \"/Users/justintat/bootcamp/SDC/SanDC-1/sdc/sdc-overview/qnaDb/ec2Logins/FirstSDCserver.pem\" ubuntu@ec2-54-166-182-206.compute-1.amazonaws.com"
   },
   "author": "",

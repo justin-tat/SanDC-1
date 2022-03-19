@@ -133,7 +133,7 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
         //Redis Caching
         //client.setex(key, expiration secs, value);
         //Currently storing numerical ID with retObj for 2 hours in redis cache
-        client.set(JSON.stringify(stringId), JSON.stringify(retObj));
+        //client.set(JSON.stringify(stringId), JSON.stringify(retObj));
         res.send(retObj);
     })
     .catch(err => {
