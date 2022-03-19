@@ -8,11 +8,15 @@ const redis = require('redis');
 const REDIS_PORT = 6379;
 const client = redis.createClient(REDIS_PORT);
 
-await client.connect();
-
 qnaRouter.use(express.json());
 qnaRouter.use(bodyParser.urlencoded({ extended: false }));
 qnaRouter.use(bodyParser.json());
+
+(async () => {
+    client.on('error', (err) => console.log('Redis Client Error', err));
+  
+    await client.connect();
+  })();
 
 qnaRouter.get('/', async (req, res) => {
     console.log('qna initial get');
