@@ -21,6 +21,7 @@ qnaRouter.use(bodyParser.json());
 //Cache middleware
 function cache(req, res, next) {
     var id = parseInt(req.query.id);
+    console.log("Inside of middleware");
     client.get(id, (err, data) => {
         if (err) {
             console.log("Messed up in cache middleware function");
@@ -42,7 +43,7 @@ qnaRouter.get('/', async (req, res) => {
 
 //Cache middleware
 function cache(req, res, next) {
-    var id = parseInt(req.query.id);
+    var id = req.query.id;
     client.get(id, (err, data) => {
         if (err) {
             console.log("Messed up in cache middleware function");
