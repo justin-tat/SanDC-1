@@ -23,11 +23,10 @@ qnaRouter.use(bodyParser.json());
 
 
 qnaRouter.get('/', async (req, res) => {
-    console.log('qna initial get');
     res.sendStatus(200);
 });
 
-//Cache middleware (works after refactoring over to promise based instead of async await)
+//Cache middleware 
 function cache(req, res, next) {
     var id = JSON.stringify(req.query.id);
     client.get(id)
@@ -44,7 +43,6 @@ function cache(req, res, next) {
     })
 }
 
-//Done
 qnaRouter.get('/getQuestionsList', cache, (req, res) => {
     var stringId = req.query.id;
     var id = parseInt(stringId);
@@ -84,7 +82,6 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
         for(var i = 0; i < qna.length; i++) {
             qna[i] = qna[i].rows;
             for (var j = 0; j < qna[i].length; j++) {
-                //retObj.answerIds.push(qna[i][j].id);
                 for (var k = 0; k < retObj.results.length; k++) {
                     if (retObj.results[k].question_id === qna[i][j].question_id) {
                         retObj.results[k].answers[parseInt(qna[i][j].id)] = {
@@ -133,7 +130,7 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
         //Redis Caching
         //client.setex(key, expiration secs, value);
         //Currently storing numerical ID with retObj for 2 hours in redis cache
-        //client.set(JSON.stringify(stringId), JSON.stringify(retObj));
+        client.set(JSON.stringify(stringId), JSON.stringify(retObj));
         res.send(retObj);
     })
     .catch(err => {
@@ -142,27 +139,20 @@ qnaRouter.get('/getQuestionsList', cache, (req, res) => {
     })
 });
 
-//Done after FE refactoring
 qnaRouter.put('/updateQuestionHelp', async (req, res) => {
     var id = req.body.params.questionId;
-    //console.log(req);
-    console.log('questionId', req.body.params.questionId);
-    console.log('productId', req.body.params.productId);
     db.db.query(`UPDATE questions SET helpful = helpful + 1 WHERE id = $1`, [id], (err) => {
         if (err) {
             console.log('Errored while trying to update answers helpful', err);
             res.status(400).send(err);
         }
         console.log('Successfully updated question helpfulness of ' + req.body.params.questionId)
-        //res.send('Successfully updated question helpfulness of ' + req.params.id);
         res.redirect(303, `getQuestionsList?id=${req.body.params.productId}`);
-        //next();
     });
 });
-//Done after FE refactoring
+
 qnaRouter.put('/updateAnswerHelp', async (req, res) => {
     var id = req.body.params.answerId;
-
     db.db.query('UPDATE answers SET helpful = helpful + 1 WHERE id = $1', [id], (err) => {
         if (err) {
             console.log('Errored while trying to update answers helpful', err);
@@ -172,10 +162,8 @@ qnaRouter.put('/updateAnswerHelp', async (req, res) => {
     });
 });
 
-//Done after FE Refactor
 qnaRouter.put('/reportAnswer', async (req, res) => {
-    var id = req.params.id;
-    id = req.body.params.productId;
+    var id = req.params.answerId;
     db.db.query('UPDATE answers SET reported = reported + 1 WHERE id = $1', [id], (err, result) => {
         if (err) {
             console.log('Errored while trying to update answers reportedness', err);
@@ -186,7 +174,6 @@ qnaRouter.put('/reportAnswer', async (req, res) => {
     });
 });
 
-//Done after FE Refactor
 qnaRouter.post('/addNewQuestion', async (req, res) => {
     var productID = req.body.params.id;
     var body = req.body.params.body;
@@ -195,7 +182,6 @@ qnaRouter.post('/addNewQuestion', async (req, res) => {
     var timestamp = Date.now();
     db.db.query(`INSERT INTO questions ( product_id, body, date_written_secs, asker_name, asker_email) VALUES ($1, $2, $3, $4, $5) RETURNING id, date_written_secs`, [ productID, body, timestamp, askName, askEmail ])
     .then((result) => {
-        //res.send('Successfully added question: ' + result.rows[0].id);
         console.log('Successfully added question');
         res.redirect(303, `getQuestionsList?id=${req.body.params.id}`);
     })
@@ -206,7 +192,6 @@ qnaRouter.post('/addNewQuestion', async (req, res) => {
 
 });
 
-//Done
 qnaRouter.post('/addNewAnswer', async (req, res) => {
     var questionID = req.body.params.id;
     var body = req.body.params.body;
